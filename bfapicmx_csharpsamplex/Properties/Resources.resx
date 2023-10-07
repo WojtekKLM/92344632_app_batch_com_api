@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddUser" xml:space="preserve">
+    <value>AddUser</value>
+  </data>
+  <data name="Advise2PCell" xml:space="preserve">
+    <value>Advise</value>
+  </data>
+  <data name="Advise4Object" xml:space="preserve">
+    <value>Advise4Object</value>
+  </data>
+  <data name="Advise4SIS" xml:space="preserve">
+    <value>Advise4SIS</value>
+  </data>
+  <data name="Archive" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="Auto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="BackUp" xml:space="preserve">
+    <value>BackUp</value>
+  </data>
+  <data name="CancelRefresh" xml:space="preserve">
+    <value>CancelRefresh</value>
+  </data>
+  <data name="ChainBatch2Batch" xml:space="preserve">
+    <value>ChainBatch2Batch</value>
+  </data>
+  <data name="ClearLock4Object" xml:space="preserve">
+    <value>ClearLock4Object</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="CopyBatch" xml:space="preserve">
+    <value>CopyBatch</value>
+  </data>
+  <data name="CopyFormula" xml:space="preserve">
+    <value>CopyFormula</value>
+  </data>
+  <data name="CopyOrder" xml:space="preserve">
+    <value>CopyOrder</value>
+  </data>
+  <data name="CopyRecipe" xml:space="preserve">
+    <value>CopyRecipe</value>
+  </data>
+  <data name="CreateBatch" xml:space="preserve">
+    <value>CreateBatch</value>
+  </data>
+  <data name="CreateFormula" xml:space="preserve">
+    <value>CreateFormula</value>
+  </data>
+  <data name="CreateFormulaCat" xml:space="preserve">
+    <value>CreateFormulaCat</value>
+  </data>
+  <data name="CreateLibrary" xml:space="preserve">
+    <value>CreateLibrary</value>
+  </data>
+  <data name="CreateManyMaterials" xml:space="preserve">
+    <value>CreateManyMaterials</value>
+  </data>
+  <data name="CreateMaterial" xml:space="preserve">
+    <value>CreateMaterial</value>
+  </data>
+  <data name="CreateOrder" xml:space="preserve">
+    <value>CreateOrder</value>
+  </data>
+  <data name="CreateOrderCat" xml:space="preserve">
+    <value>CreateOrderCat</value>
+  </data>
+  <data name="CreateQuality" xml:space="preserve">
+    <value>CreateQuality</value>
+  </data>
+  <data name="CreateRecipe" xml:space="preserve">
+    <value>CreateRecipe</value>
+  </data>
+  <data name="CreateSubfolder" xml:space="preserve">
+    <value>CreateSubfolder</value>
+  </data>
+  <data name="DeleteBatch" xml:space="preserve">
+    <value>DeleteBatch</value>
+  </data>
+  <data name="DeleteFormula" xml:space="preserve">
+    <value>DeleteFormula</value>
+  </data>
+  <data name="DeleteFormulaCat" xml:space="preserve">
+    <value>DeleteFormulaCat</value>
+  </data>
+  <data name="DeleteLibrary" xml:space="preserve">
+    <value>DeleteLibrary</value>
+  </data>
+  <data name="DeleteMaterial" xml:space="preserve">
+    <value>DeleteMaterial</value>
+  </data>
+  <data name="DeleteOrder" xml:space="preserve">
+    <value>DeleteOrder</value>
+  </data>
+  <data name="DeleteOrderCat" xml:space="preserve">
+    <value>DeleteOrderCat</value>
+  </data>
+  <data name="DeleteQuality" xml:space="preserve">
+    <value>DeleteQuality</value>
+  </data>
+  <data name="DeleteRecipe" xml:space="preserve">
+    <value>DeleteRecipe</value>
+  </data>
+  <data name="DeleteSubfolder" xml:space="preserve">
+    <value>DeleteSubfolder</value>
+  </data>
+  <data name="DisConnect" xml:space="preserve">
+    <value>DisConnect</value>
+  </data>
+  <data name="ExecuteCommand" xml:space="preserve">
+    <value>ExecuteCommand</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="GetAllActiveXFERPhase4PCell" xml:space="preserve">
+    <value>GetAllActiveXFERPhase4PCell</value>
+  </data>
+  <data name="GetAllBatches4Order" xml:space="preserve">
+    <value>GetAllBatches4Order</value>
+  </data>
+  <data name="GetAllChainedPredecessors4Batch" xml:space="preserve">
+    <value>GetAllChainedPredecessors4Batch</value>
+  </data>
+  <data name="GetAllChainedSuccessors4Batch" xml:space="preserve">
+    <value>GetAllChainedSuccessors4Batch</value>
+  </data>
+  <data name="GetAllChainRoots4PCell" xml:space="preserve">
+    <value>GetAllChainRoots4PCell</value>
+  </data>
+  <data name="GetAllDataTypes4PCell" xml:space="preserve">
+    <value>GetAllDataTypes4PCell</value>
+  </data>
+  <data name="GetAllEventDefinitions" xml:space="preserve">
+    <value>GetAllEventDefinitions</value>
+  </data>
+  <data name="GetAllFormulaCats4PCell" xml:space="preserve">
+    <value>GetAllFormulaCats4PCell</value>
+  </data>
+  <data name="GetAllFormulas4FormulaCat" xml:space="preserve">
+    <value>GetAllFormulas4FormulaCat</value>
+  </data>
+  <data name="GetAllFormulas4MR" xml:space="preserve">
+    <value>GetAllFormulas4MR</value>
+  </data>
+  <data name="GetAllFormulasOrMR4CreateBatch" xml:space="preserve">
+    <value>GetAllFormulasOrMR4CreateBatch</value>
+  </data>
+  <data name="GetAllLIB4PCell" xml:space="preserve">
+    <value>GetAllLIB4PCell</value>
+  </data>
+  <data name="GetAllMaterials4PCell" xml:space="preserve">
+    <value>GetAllMaterials4PCell</value>
+  </data>
+  <data name="GetAllMR4PCell" xml:space="preserve">
+    <value>GetAllMR4PCell</value>
+  </data>
+  <data name="GetAllocations" xml:space="preserve">
+    <value>GetAllocations</value>
+  </data>
+  <data name="GetAllOrderCats4PCell" xml:space="preserve">
+    <value>GetAllOrderCats4PCell</value>
+  </data>
+  <data name="GetAllOrders4OrderCat" xml:space="preserve">
+    <value>GetAllOrders4OrderCat</value>
+  </data>
+  <data name="GetAllPCells4Project" xml:space="preserve">
+    <value>GetAllPCells4Project</value>
+  </data>
+  <data name="GetAllPhysicalUnits4PCell" xml:space="preserve">
+    <value>GetAllPhysicalUnits4PCell</value>
+  </data>
+  <data name="GetAllPrintTemplates4PCell" xml:space="preserve">
+    <value>GetAllPrintTemplates4PCell</value>
+  </data>
+  <data name="GetAllProjects" xml:space="preserve">
+    <value>GetAllProjects</value>
+  </data>
+  <data name="GetAllQualities4Material" xml:space="preserve">
+    <value>GetAllQualities4Material</value>
+  </data>
+  <data name="GetAllSubfolders4PCell" xml:space="preserve">
+    <value>GetAllSubfolders4PCell</value>
+  </data>
+  <data name="GetAllSubscriptions" xml:space="preserve">
+    <value>GetAllSubscriptions</value>
+  </data>
+  <data name="GetAllUnitClasses4PCell" xml:space="preserve">
+    <value>GetAllUnitClasses4PCell</value>
+  </data>
+  <data name="GetAllUnits" xml:space="preserve">
+    <value>GetAllUnits</value>
+  </data>
+  <data name="GetAllUnits4UnitClass" xml:space="preserve">
+    <value>GetAllUnits4UnitClass</value>
+  </data>
+  <data name="GetAttribute4Object" xml:space="preserve">
+    <value>GetAttribute4Object</value>
+  </data>
+  <data name="GetBatchSize" xml:space="preserve">
+    <value>GetBatchSize</value>
+  </data>
+  <data name="GetBatchStartData" xml:space="preserve">
+    <value>GetBatchStartData</value>
+  </data>
+  <data name="GetBatchState" xml:space="preserve">
+    <value>GetBatchState</value>
+  </data>
+  <data name="GetChangedBatches" xml:space="preserve">
+    <value>GetChangedBatches</value>
+  </data>
+  <data name="GetChildren" xml:space="preserve">
+    <value>GetChildren</value>
+  </data>
+  <data name="GetErrorText" xml:space="preserve">
+    <value>GetErrorText</value>
+  </data>
+  <data name="GetFormulaCat4MR" xml:space="preserve">
+    <value>GetFormulaCat4MR</value>
+  </data>
+  <data name="GetHistoricalSISEvents4Batch" xml:space="preserve">
+    <value>GetHistorical
+SISEvents</value>
+  </data>
+  <data name="GetHistoricalSISEvents4Unit" xml:space="preserve">
+    <value>GetHistoricalSISEvents4Unit</value>
+  </data>
+  <data name="GetLogBookObjects" xml:space="preserve">
+    <value>GetLogBookObjects</value>
+  </data>
+  <data name="GetMaterialData" xml:space="preserve">
+    <value>GetMaterialData</value>
+  </data>
+  <data name="GetMR4Formula" xml:space="preserve">
+    <value>GetMR4Formula</value>
+  </data>
+  <data name="GetObjectData" xml:space="preserve">
+    <value>GetObjectData</value>
+  </data>
+  <data name="GetObjectHeader" xml:space="preserve">
+    <value>GetObjectHeader</value>
+  </data>
+  <data name="GetObjectState" xml:space="preserve">
+    <value>GetObjectState</value>
+  </data>
+  <data name="GetParameter" xml:space="preserve">
+    <value>GetParameter</value>
+  </data>
+  <data name="GetParent" xml:space="preserve">
+    <value>GetParent</value>
+  </data>
+  <data name="GetProductData4Formula" xml:space="preserve">
+    <value>GetProductData4Object (Formula)</value>
+  </data>
+  <data name="GetProductData4MR" xml:space="preserve">
+    <value>GetProductData4Object (MR)</value>
+  </data>
+  <data name="GetProductData4Object" xml:space="preserve">
+    <value>GetProductData4Object</value>
+  </data>
+  <data name="GetQualityData" xml:space="preserve">
+    <value>GetQualityData</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Init" xml:space="preserve">
+    <value>Init</value>
+  </data>
+  <data name="IsEqualHDL" xml:space="preserve">
+    <value>IsEqualHDL</value>
+  </data>
+  <data name="IsMaterialReferenced" xml:space="preserve">
+    <value>IsMaterialReferenced</value>
+  </data>
+  <data name="LockObject" xml:space="preserve">
+    <value>LockObject</value>
+  </data>
+  <data name="PrintObject" xml:space="preserve">
+    <value>PrintObject</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RemoveUser" xml:space="preserve">
+    <value>RemoveUser</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="SetAdviseFilter" xml:space="preserve">
+    <value>SetAdviseFilter</value>
+  </data>
+  <data name="SetAllocations" xml:space="preserve">
+    <value>SetAllocations</value>
+  </data>
+  <data name="SetAttribute4Object" xml:space="preserve">
+    <value>SetAttribute4Object</value>
+  </data>
+  <data name="SetBatchSize" xml:space="preserve">
+    <value>SetBatchSize</value>
+  </data>
+  <data name="SetBatchStartData" xml:space="preserve">
+    <value>SetBatchStartData</value>
+  </data>
+  <data name="SetBatchState" xml:space="preserve">
+    <value>SetBatchState</value>
+  </data>
+  <data name="SetCurrentUser" xml:space="preserve">
+    <value>SetCurrentUser</value>
+  </data>
+  <data name="SetFormulaCat4MR" xml:space="preserve">
+    <value>SetFormulaCat4MR</value>
+  </data>
+  <data name="SetManyParameters" xml:space="preserve">
+    <value>SetManyParameters</value>
+  </data>
+  <data name="SetMaterialData" xml:space="preserve">
+    <value>SetMaterialData</value>
+  </data>
+  <data name="SetMR4Formula" xml:space="preserve">
+    <value>SetMR4Formula</value>
+  </data>
+  <data name="SetObjectState" xml:space="preserve">
+    <value>SetObjectState</value>
+  </data>
+  <data name="SetParameter" xml:space="preserve">
+    <value>SetParameter</value>
+  </data>
+  <data name="SetProductData4Formula" xml:space="preserve">
+    <value>SetProductData4Formula</value>
+  </data>
+  <data name="SetProductData4MR" xml:space="preserve">
+    <value>SetProductData4MR</value>
+  </data>
+  <data name="SetProductData4Object" xml:space="preserve">
+    <value>SetProductData4Object</value>
+  </data>
+  <data name="SetQualityData" xml:space="preserve">
+    <value>SetQualityData</value>
+  </data>
+  <data name="SubscribeAllBasicEvents" xml:space="preserve">
+    <value>SubscribeAllBasicEvents</value>
+  </data>
+  <data name="SubscribeEvent" xml:space="preserve">
+    <value>SubscribeEvent</value>
+  </data>
+  <data name="Suspend" xml:space="preserve">
+    <value>Suspend</value>
+  </data>
+  <data name="TransferData2PH" xml:space="preserve">
+    <value>TransferData2PH</value>
+  </data>
+  <data name="UnAdvise4Object" xml:space="preserve">
+    <value>UnAdvise4Object</value>
+  </data>
+  <data name="UnAdvise4SIS" xml:space="preserve">
+    <value>UnAdvise4SIS</value>
+  </data>
+  <data name="UnAdviseFromPCell" xml:space="preserve">
+    <value>UnAdvise</value>
+  </data>
+  <data name="UnChainBatchFromBatch" xml:space="preserve">
+    <value>UnChainBatchFromBatch</value>
+  </data>
+  <data name="UnlockObject" xml:space="preserve">
+    <value>UnlockObject</value>
+  </data>
+  <data name="UnSubscribeEvent" xml:space="preserve">
+    <value>UnSubscribeEvent</value>
+  </data>
+  <data name="ValidateObject" xml:space="preserve">
+    <value>ValidateObject</value>
+  </data>
+  <data name="BatchMLPath" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="Wildcard" xml:space="preserve">
+    <value>Wildcard</value>
+  </data>
+</root>

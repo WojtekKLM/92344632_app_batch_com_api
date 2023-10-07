@@ -1,0 +1,42 @@
+﻿<Window x:Class="Siemens.Automation.bfapicmx_csharpsamplex.InitWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="InitWindow" Height="140" Width="220" Icon="Application.ico">
+    
+    <Window.Resources>
+        <ResourceDictionary Source="MainStyles.xaml" />
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.Background>
+            <RadialGradientBrush RadiusY="0.573" RadiusX="0.667" GradientOrigin="1.01,1.035">
+                <GradientStop Color="#FF06183C" Offset="0.81"/>
+                <GradientStop Color="#FF0D60A3"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="61*"/>
+            <ColumnDefinition Width="151*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Top" Orientation="Vertical" Grid.ColumnSpan="1" Height="36" >
+            <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,10" Text="Version:" Width="45"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.ColumnSpan="1" Name="UI_InitStackPanel">
+            <ComboBox Style="{StaticResource COMBOBOX}" x:Name="UI_VERSIONBOX" Margin="5,5" SelectionChanged="ComboBox_SelectionChanged" IsEditable="False">
+                <ComboBoxItem Content="SB_API (6.1.3)" Tag="613"/>
+                <ComboBoxItem Content="SB_API_701HF14.1 (7.0.1)" Tag="701"/>
+                <ComboBoxItem Content="SB_API_707 (7.0.7)" Tag="707"/>
+                <ComboBoxItem Content="SB_API_712 (7.1.2)" Tag="712"/>
+                <ComboBoxItem Content="SB_API_800 (8.0.0)" Tag="800"/>
+                <ComboBoxItem Content="SB_API_801 (8.0.1)" Tag="801"/>
+                <ComboBoxItem Content="SB_API_810 (8.1.0)" Tag="810" />
+                <ComboBoxItem Content="SB_API_811 (8.1.1)" Tag="811" />
+                <ComboBoxItem Content="SB_API_820 (8.2.0)" Tag="820" Selector.IsSelected="True"/>
+            </ComboBox>
+            <CheckBox Style="{StaticResource CHECKBOX}" x:Name="UI_LOADERCHECK" Margin="5,5,0,5" HorizontalAlignment="Left" Content="Loader"/>
+            <CheckBox Style="{StaticResource CHECKBOX}" x:Name="UI_REMOTECHECK" Margin="5,5,0,5" HorizontalAlignment="Left" Content="Remote" Width="60" Visibility="Visible" />
+        </StackPanel>
+        <Button Style="{StaticResource BUTTON}" x:Name="UI_OK"     Content="OK"     Grid.ColumnSpan="2" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Margin="10,0,0,10" Click="UI_OK_Click" IsDefault="True" />
+        <Button Style="{StaticResource BUTTON}" x:Name="UI_CANCEL" Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Click="UI_CANCEL_Click" Grid.Column="1" IsCancel="True" />
+    </Grid>
+</Window>

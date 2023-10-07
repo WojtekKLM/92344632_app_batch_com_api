@@ -1,0 +1,1143 @@
+﻿<Window x:Class="Siemens.Automation.bfapicmx_csharpsamplex.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:form="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:rscx="clr-namespace:Siemens.Automation.bfapicmx_csharpsamplex.Properties"
+        xmlns:local="clr-namespace:Siemens.Automation.bfapicmx_csharpsamplex"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="MainWindow" Loaded="Window_Loaded" WindowStyle="ToolWindow" ResizeMode="CanResizeWithGrip" MinHeight="735" MinWidth="900" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="723" d:DesignWidth="900" Width="1000" Height="735" Closing="Window_Closing"
+        Icon="Application.ico">
+    
+    <Window.Resources>
+        <ResourceDictionary Source="MainStyles.xaml" />
+    </Window.Resources>
+
+    <Grid x:Name="UI_MainGrid">
+        <Grid.Background>
+            <RadialGradientBrush RadiusY="0.573" RadiusX="0.667" GradientOrigin="1.01,1.035">
+                <GradientStop Color="#FF06183C" Offset="0.81"/>
+                <GradientStop Color="#FF0D60A3"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="635"/>
+            <ColumnDefinition Width="453*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="10,5,0,665" VerticalAlignment="Top" >
+                <CheckBox Content="ApiVers" Height="17" Name="UI_CHCKCHOOSEAPIVERSION" Style="{StaticResource CHECKBOX}" Width="54" Margin="0,5,5,0" />
+                <Button Style="{StaticResource BUTTON}" Margin="0,0,10,0" Content="{x:Static rscx:Resources.Init}" CommandParameter="Init" Command="{Binding Path=ExecuteCommand}"  />
+                <TextBox  x:Name="UI_APIVERSION" Style="{StaticResource TEXTBOX}" Height="20" Width="39" Margin="0,0,10,0" IsReadOnly="True" />
+                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="0,0,10,0" Text="Session ID:" Width="Auto" />
+                <TextBox Style="{StaticResource TEXTBOX}" Margin="0,0,10,0" x:Name="UI_SessionID" Width="206" IsReadOnly="True" />
+                <Button Style="{StaticResource BUTTON}" Margin="0,0,8,0" Content="{x:Static rscx:Resources.Auto}" Name="UI_BAuto" Click="UI_BAuto_Click" />
+                <Button Style="{StaticResource BUTTON}" Margin="0,0,0,0" Content="{x:Static rscx:Resources.Exit}" CommandParameter="Exit" Command="{Binding Path=ExecuteCommand}" />
+            </StackPanel>
+            <Border Height="93" Margin="10,35,0,0" VerticalAlignment="Top" Padding="0,5,0,0">
+                <WrapPanel>
+                    <Grid x:Name="UI_OUTPUTBAR_1" Height="16" Width="467" Margin="0,0,5,0"> <!--Orientation="Horizontal"-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton Grid.Column="0" Style="{StaticResource CHECKBUTTON}" Tag="0" x:Name="UI_CHECHKBOXALL" Checked="UI_CHECHKBOXALL_Checked" Unchecked="UI_CHECHKBOXALL_Unchecked" FontWeight="Bold">ALL</ToggleButton>
+                        <ToggleButton Grid.Column="1" Style="{StaticResource CHECKBUTTON}" Tag="1" x:Name="UI_CHECHKNAME" IsChecked="True">Name</ToggleButton>
+                        <ToggleButton Grid.Column="2" Style="{StaticResource CHECKBUTTON}" Tag="2" x:Name="UI_CHECHKVERSION" >Version</ToggleButton>
+                        <ToggleButton Grid.Column="3" Style="{StaticResource CHECKBUTTON}" Tag="4" x:Name="UI_CHECHKPARENT" >Parent</ToggleButton>
+                        <ToggleButton Grid.Column="4" Style="{StaticResource CHECKBUTTON}" Tag="8" x:Name="UI_CHECHKDBID" IsChecked="True">DBID</ToggleButton>
+                        <ToggleButton Grid.Column="5" Style="{StaticResource CHECKBUTTON}" Tag="16" x:Name="UI_CHECHKDESC" >Desc.</ToggleButton>
+                        <ToggleButton Grid.Column="6" Style="{StaticResource CHECKBUTTON}" Tag="32" x:Name="UI_CHECHKCODE" >Code</ToggleButton>
+                        <ToggleButton Grid.Column="7" Style="{StaticResource CHECKBUTTON}" Tag="32768" x:Name="UI_CHECHKPRODUCT">Product</ToggleButton>
+                        <ToggleButton Grid.Column="8" Style="{StaticResource CHECKBUTTON}" Tag="131072" x:Name="UI_CHECHSUBFHDL">SubFHdl</ToggleButton>
+                    </Grid>
+                    <Grid x:Name="UI_OUTPUTBAR_2" Margin="0,5,0,0" Height="16" Width="467">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleButton Grid.Column="0" Style="{StaticResource CHECKBUTTON}" Tag="64" x:Name="UI_CHECHUSAGE">Usage</ToggleButton>
+                        <ToggleButton Grid.Column="1" Style="{StaticResource CHECKBUTTON}" Tag="128" x:Name="UI_CHECHSTATE" IsChecked="True">State</ToggleButton>
+                        <ToggleButton Grid.Column="2" Style="{StaticResource CHECKBUTTON}" Tag="256" x:Name="UI_CHECHEXSTATE" IsChecked="True">ExState</ToggleButton>
+                        <ToggleButton Grid.Column="3" Style="{StaticResource CHECKBUTTON}" Tag="8192" x:Name="UI_CHECHTYPE">Type</ToggleButton>
+                        <ToggleButton Grid.Column="4" Style="{StaticResource CHECKBUTTON}" Tag="1024" x:Name="UI_CHECHSIZE">Size</ToggleButton>
+                        <ToggleButton Grid.Column="5" Style="{StaticResource CHECKBUTTON}" Tag="2048" x:Name="UI_CHECHLO" >LO</ToggleButton>
+                        <ToggleButton Grid.Column="6" Style="{StaticResource CHECKBUTTON}" Tag="4096" x:Name="UI_CHECHHI">HI</ToggleButton>
+                        <ToggleButton Grid.Column="7" Style="{StaticResource CHECKBUTTON}" Tag="65536" x:Name="UI_CHECHGUID">GUID</ToggleButton>
+                        <ToggleButton Grid.Column="8" Style="{StaticResource CHECKBUTTON}" Tag="262144" x:Name="UI_CHECHUOM">UoM</ToggleButton>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0" VerticalAlignment="Center" Width="467">
+                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,0,0,0" Width="61">Counter</TextBlock>
+                        <TextBox x:Name="UI_TXTCOUNTER" Style="{StaticResource TEXTBOX}" Width="20"></TextBox>
+                        <CheckBox x:Name="UI_CHCKLOGNOTIFICATION" Style="{StaticResource CHECKBOX}" Width="115" VerticalAlignment="Center" Margin="10,0,0,0">LOG Notifications</CheckBox>
+                        <CheckBox x:Name="UI_CHCKMSGNOTIFICATION" Style="{StaticResource CHECKBOX}" Width="110" VerticalAlignment="Center">MSG Notifications</CheckBox>
+                        <CheckBox x:Name="UI_CHCKTREENOTIFICATION" Style="{StaticResource CHECKBOX}" Width="130" VerticalAlignment="Center">Treeview Notifications</CheckBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="467">
+                        <CheckBox x:Name="UI_CHCKFORMATOUTPUT" Style="{StaticResource CHECKBOX}" Margin="101,5,0,0" Width="115">Format output and</CheckBox>
+                        <CheckBox x:Name="UI_CHCKDUMP2FILES" Style="{StaticResource CHECKBOX}" Width="105" VerticalAlignment="Center" >Dump to files in</CheckBox>
+                        <TextBox x:Name="UI_TXTDUMP2FILES"  IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKDUMP2FILES}" Style="{StaticResource TEXTBOX}" Width="125" VerticalAlignment="Center" Text= "C:\Temp\"/>
+                    </StackPanel>
+                </WrapPanel>
+            </Border>
+            <Grid Margin="12,135,0,0">
+                <Border Margin="0,0,5,105" Style="{StaticResource BORDER}" >
+                    <Grid Name="UI_COMMONCANVAS" Margin="5,5,5,0">
+                        <ContentControl Name="UI_GRID_INIT" Visibility="Collapsed" Tag="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="135" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!--<Border Style="{StaticResource BORDER}" HorizontalAlignment="Left" Width="135" VerticalAlignment="Top" Padding="5" Height="301">-->
+                                <StackPanel Grid.Column="0" Margin="0,5,0,0">
+                                        <Button Style="{StaticResource BUTTON}" Content="{x:Static rscx:Resources.SetCurrentUser}" Command="{Binding Path=SetCommand}" CommandParameter="SetCurrentUser" Width="120" Margin="0,5,0,0"></Button>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="8,5,0,0">Username:</TextBlock>
+                                        <TextBox x:Name="UI_TXTUSERNAME" Style="{StaticResource TEXTBOX}" Width="120" Text="{Binding Source={x:Static rscx:Settings.Default}, Path=Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="8,5,0,0">Password:</TextBlock>
+                                        <PasswordBox x:Name="UI_TXTPASSWORD" Style="{StaticResource PASSWORDBOX}" Width="120" >
+                                            <PasswordBox.InputBindings>
+                                                <KeyBinding Key="Enter" Command="{Binding Path=SetCommand}" CommandParameter="SetCurrentUser" />
+                                            </PasswordBox.InputBindings>
+                                        </PasswordBox>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Width="120" Margin="8,5,0,0">Longname:</TextBlock>
+                                        <TextBox x:Name="UI_TXTLONGNAME" Style="{StaticResource TEXTBOX}" Width="120" IsReadOnly="True" Text="{Binding ElementName=UI_TXTUSERNAME, Path=Text}" Background="LightGray" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Width="120" Margin="8,5,0,0">Domain:</TextBlock>
+                                        <TextBox x:Name="UI_TXTDOMAIN" Style="{StaticResource TEXTBOX}" Width="120" Text="{Binding Source={x:Static rscx:Settings.Default}, Path=Domain, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="True" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Width="120" Margin="8,5,0,0">Computer:</TextBlock>
+                                        <TextBox x:Name="UI_TXTCOMPUTER" Style="{StaticResource TEXTBOX}" Width="120" Text="{Binding Source={x:Static rscx:Settings.Default}, Path=Computer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Width="120" Margin="8,5,0,0">Application:</TextBlock>
+                                        <TextBox x:Name="UI_TXTAPPLICATION" Style="{StaticResource TEXTBOX}" Width="120" Text="{Binding Source={x:Static rscx:Settings.Default}, Path=Application, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                <Line Grid.Column="0" Style="{StaticResource verticalLineStyle}" />
+                                <!--</Border>-->
+                                <!--<Border Style="{StaticResource BORDER}" Margin="6,0,0,0" VerticalAlignment="Top" Grid.Column="1" Width="482">-->
+                                <StackPanel Grid.Column="1" Margin="5,5,0,0">
+                                    <Button Style="{StaticResource BUTTON}" Margin="8,5,0,0" Width="135" Content="{x:Static rscx:Resources.GetAllProjects}" Foreground="{StaticResource Get}" CommandParameter="GetAllProjects" Command="{Binding Path=GetCommand}" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                    <ComboBox Name="UI_CBALLPROEJCTS" Margin="7,2,5,0" Style="{StaticResource COMBOBOX}" />
+                                    <Button Style="{StaticResource BUTTON}" Margin="8,8,0,0" HorizontalAlignment="Left"  Width="135" Content="{x:Static rscx:Resources.GetAllPCells4Project}" Foreground="{StaticResource Get}" CommandParameter="GetAllPCells4Project" Command="{Binding Path=GetCommand}" />
+                                    <ComboBox Name="UI_CBALLPCELLS4PROJECT" Margin="7,2,5,0" Style="{StaticResource COMBOBOX}" Text="{Binding ElementName=UI_CBPCELLS, Path=Text, Mode=TwoWay}" />
+                                    <Button Style="{StaticResource BUTTON}" Margin="8,8,0,0" HorizontalAlignment="Left" Width="135" Content="{x:Static rscx:Resources.GetAllUnitClasses4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllUnitClasses4PCell" Command="{Binding Path=GetCommand}" />
+                                    <ComboBox x:Name="UI_CBALLUNITCLASSES4PCELL" Margin="7,2,5,0" Style="{StaticResource COMBOBOX}"></ComboBox>
+                                    <Button Style="{StaticResource BUTTON}" Margin="8,8,0,0" HorizontalAlignment="Left" Width="135" Content="{x:Static rscx:Resources.GetAllUnits4UnitClass}" Foreground="{StaticResource Get}" CommandParameter="GetAllUnits4UnitClass" Command="{Binding Path=GetCommand}" />
+                                    <ComboBox x:Name="UI_CBALLUNITS4UNITCLASS" Margin="7,2,5,0" Style="{StaticResource COMBOBOX}"></ComboBox>
+                                    <Button Style="{StaticResource BUTTON}" Margin="8,8,0,0" HorizontalAlignment="Left" Width="135" Content="{x:Static rscx:Resources.GetAllDataTypes4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllDataTypes4PCell" Command="{Binding Path=GetCommand}" />
+                                    <ComboBox x:Name="UI_CBALLDATATYPES4PCELL" Margin="7,2,5,0" Style="{StaticResource COMBOBOX}"></ComboBox>
+                                    <Button Style="{StaticResource BUTTON}" Margin="8,8,0,0" HorizontalAlignment="Left" Width="135" Content="{x:Static rscx:Resources.GetAllPhysicalUnits4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllPhysicalUnits4PCell" Command="{Binding Path=GetCommand}" />
+                                    <ComboBox x:Name="UI_CBALLPHYSICALUNITS4PCELL" Margin="7,2,5,0" Style="{StaticResource COMBOBOX}" />
+
+                                </StackPanel>
+                                <!--</Border>-->
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_RECIPEFORMULA" Visibility="Collapsed" Tag="2">
+                            <Grid>
+                                <Button Style="{StaticResource BUTTON}" Margin="3,54,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.GetAllMR4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllMR4PCell" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCreateRecipe" Style="{StaticResource BUTTON}" Margin="193,54,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Content="{x:Static rscx:Resources.CreateRecipe}" Foreground="{StaticResource Create}" CommandParameter="CreateRecipe" Command="{Binding Path=CreateCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button x:Name="UI_BCopyRecipe" Style="{StaticResource BUTTON}" Margin="527,270,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Content="{x:Static rscx:Resources.CopyRecipe}" Foreground="{StaticResource Copy}" CommandParameter="CopyRecipe" Command="{Binding Path=CopyCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button Style="{StaticResource BUTTON}" Margin="270,54,266,0" VerticalAlignment="Top" Content="{x:Static rscx:Resources.DeleteRecipe}" Foreground="{StaticResource Delete}" CommandParameter="DeleteRecipe" Command="{Binding Path=DeleteCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="3,106,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.GetFormulaCat4MR}" Foreground="{StaticResource Get}" CommandParameter="GetFormulaCat4MR" Command="{Binding Path=GetCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="278,149,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.SetFormulaCat4MR}" Foreground="{StaticResource Set}" CommandParameter="SetFormulaCat4MR" Command="{Binding Path=SetCommand}" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="3,127,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" x:Name="UI_CBFORMULACATS"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="4,277,0,0" HorizontalAlignment="Left" Width="115" Content="{x:Static rscx:Resources.GetAllFormulas4MR}" Foreground="{StaticResource Get}" CommandParameter="GetAllFormulas4MR" Command="{Binding Path=GetCommand}" Height="20" VerticalAlignment="Top" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="3,247,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" x:Name="UI_CBFORMULAS"></ComboBox>
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="1,297,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" x:Name="UI_CBFORMULAS4MR"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="3,169,464,0" VerticalAlignment="Top" Content="{x:Static rscx:Resources.GetAllFormulaCats4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllFormulaCats4PCell" Command="{Binding Path=GetCommand}" Width="139" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="2,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="390" x:Name="UI_CBFORMULACATS4PCELL" Focusable="True"></ComboBox>
+                                <Button x:Name="UI_BCreateFormulaCat" Style="{StaticResource BUTTON}" Margin="194,106,314,0" VerticalAlignment="Top" Content="{x:Static rscx:Resources.CreateFormulaCat}" Foreground="{StaticResource Create}" CommandParameter="CreateFormulaCat" Command="{Binding Path=CreateCommand}"  MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" Width="98" />
+                                <Button Style="{StaticResource BUTTON}" Margin="293,106,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.DeleteFormulaCat}" Foreground="{StaticResource Delete}" CommandParameter="DeleteFormulaCat" Command="{Binding Path=DeleteCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="3,226,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="153" Content="{x:Static rscx:Resources.GetAllFormulas4FormulaCat}" Foreground="{StaticResource Get}" CommandParameter="GetAllFormulas4FormulaCat" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCreateFormula" Style="{StaticResource BUTTON}" Margin="191,226,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.CreateFormula}" Foreground="{StaticResource Create}" CommandParameter="CreateFormula" Command="{Binding Path=CreateCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button x:Name="UI_BCopyFormula" Style="{StaticResource BUTTON}" Margin="421,269,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.CopyFormula}" Foreground="{StaticResource Copy}" CommandParameter="CopyFormula" Command="{Binding Path=CopyCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button Style="{StaticResource BUTTON}" Margin="292,226,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.DeleteFormula}" Foreground="{StaticResource Delete}" CommandParameter="DeleteFormula" Command="{Binding Path=DeleteCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="3,329,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.GetMR4Formula}" Foreground="{StaticResource Get}" CommandParameter="GetMR4Formula" Command="{Binding Path=GetCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="301,372,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Content="{x:Static rscx:Resources.SetMR4Formula}" Foreground="{StaticResource Set}" CommandParameter="SetMR4Formula" Command="{Binding Path=SetCommand}" />
+                                <ComboBox Margin="3,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="UI_CBMRs2" Style="{StaticResource COMBOBOX}" Width="390" />
+                                <ComboBox Margin="3,350,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Name="UI_CBMRs3" Style="{StaticResource COMBOBOX}" Width="390"/>
+                                <StackPanel Margin="163,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Width="190"></StackPanel>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,385,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="179" Content="{x:Static rscx:Resources.GetProductData4Formula}" Foreground="{StaticResource Get}" CommandParameter="GetProductData4Formula" Command="{Binding Path=GetCommand}" />
+                                <Button Margin="5,428,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Path=GetCommand}" CommandParameter="GetProductData4MR" Content="{x:Static rscx:Resources.GetProductData4MR}" Foreground="{StaticResource Get}" Style="{StaticResource BUTTON}" Width="157" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,427,213,2" HorizontalAlignment="Right" Width="145" Content="{x:Static rscx:Resources.SetProductData4Formula}" Foreground="{StaticResource Set}" CommandParameter="SetProductData4Formula" Command="{Binding Path=SetCommand}" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="4,406,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="388" x:Name="UI_CBPRODUCTDATA4OBJECT"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="4,2,0,0" HorizontalAlignment="Left" Width="130" Content="{x:Static rscx:Resources.GetAllLIB4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllLIB4PCell" Command="{Binding Path=GetCommand}" Height="20" VerticalAlignment="Top" />
+                                <ComboBox x:Name="UI_CBGETALLLIBFORPCEEL" Style="{StaticResource COMBOBOX_CONNECTED}" Margin="3,23,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" Tag="{Binding ElementName=GetAllLIB4PCell}"></ComboBox>
+                                <CheckBox Name="UI_CHKBatchML" Style="{StaticResource CHECKBOX}" VerticalAlignment="Top" Width="62" Content="BatchML:" Margin="343,58,0,0" HorizontalAlignment="Left" />
+                                <TextBox Name="UI_TXTBATCHML" VerticalAlignment="Top" Width="130" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHKBatchML}" Margin="0,54,72,0" Text="C:\Temp\BML-Data.xml" HorizontalAlignment="Right" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Width="43" Margin="437,153,0,0" VerticalAlignment="Top">Name:</TextBlock>
+                                <TextBox Name="UI_TXTRECFORMNAME" Style="{StaticResource TEXTBOX}" Width="100" TabIndex="1" Margin="0,151,26,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="0,175,133,0" VerticalAlignment="Top" Width="33" HorizontalAlignment="Right">Desc:</TextBlock>
+                                <TextBox Name="UI_TXTRECFORMDESC" Style="{StaticResource TEXTBOX}" Width="100" TabIndex="2" Margin="480,173,26,0" Height="20" VerticalAlignment="Top" />
+                                <TextBlock x:Name="UI_TXTBRECFORMVERSION" Style="{StaticResource TEXTBLOCK}" Width="43" Margin="437,197,0,0" VerticalAlignment="Top">Version:</TextBlock>
+                                <TextBox Name="UI_TXTRECFORMVERSION" Style="{StaticResource TEXTBOX}" Width="59" TabIndex="3" Margin="0,196,67,0" HorizontalAlignment="Right" Height="20" VerticalAlignment="Top" />
+                                <CheckBox Content="Opt. Lock" Name="UI_CHCKRECFORMOPTLOCK" Style="{StaticResource CHECKBOX}" Width="70" Margin="440,222,0,210" TabIndex="4" Height="17" HorizontalAlignment="Left" />
+                                <CheckBox Content="SubFolder" Name="UI_CHCKRECFORMWITHSUBFOLDER" Style="{StaticResource CHECKBOX}" Width="70" Margin="0,222,15,210" TabIndex="4" Checked="UI_CHCKWITHSUBFOLDER_Checked" Height="17" HorizontalAlignment="Right" />
+
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_ORDERBATCH" Visibility="Collapsed" Tag="4">
+                            <Grid>
+                                <Grid.RowDefinitions >
+                                    <RowDefinition Height="223" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Content="{x:Static rscx:Resources.GetAllOrderCats4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllOrderCats4PCell" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCreateOrderCat" Style="{StaticResource BUTTON}" Margin="236,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Content="{x:Static rscx:Resources.CreateOrderCat}" Foreground="{StaticResource Create}" CommandParameter="CreateOrderCat" Command="{Binding Path=CreateCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,5,191,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="91" Content="{x:Static rscx:Resources.DeleteOrderCat}" CommandParameter="DeleteOrderCat" Command="{Binding Path=DeleteCommand}" />
+                                <ComboBox Style="{StaticResource COMBOBOX_CONNECTED}" Margin="5,26,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="411" x:Name="UI_CBALLORDERCATS4PCELL" Tag="{Binding ElementName=UI_BGetAllOrders4OrderCat}"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,53,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Content="{x:Static rscx:Resources.GetAllOrders4OrderCat}" x:Name="UI_BGetAllOrders4OrderCat" Foreground="{StaticResource Get}" CommandParameter="GetAllOrders4OrderCat" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCreateOrder" Style="{StaticResource BUTTON}" Margin="0,53,283,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="79" Content="{x:Static rscx:Resources.CreateOrder}" Foreground="{StaticResource Create}" CommandParameter="CreateOrder" Command="{Binding Path=CreateCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button x:Name="UI_BCopyOrder" Style="{StaticResource BUTTON}" Margin="0,0,87,30" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="84" Content="{x:Static rscx:Resources.CopyOrder}" Foreground="{StaticResource Copy}" CommandParameter="CopyOrder" Command="{Binding Path=CopyCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button Style="{StaticResource BUTTON}" Margin="324,54,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="91" Content="{x:Static rscx:Resources.DeleteOrder}" CommandParameter="DeleteOrder" Command="{Binding Path=DeleteCommand}" />
+                                <ComboBox Style="{StaticResource COMBOBOX_CONNECTED}" Margin="5,74,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="411" x:Name="UI_CBALLORDERS4ORDERCAT" Tag="{Binding ElementName=UI_BGetAllBatches4Order}"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,128,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Content="{x:Static rscx:Resources.GetAllBatches4Order}" x:Name="UI_BGetAllBatches4Order" Foreground="{StaticResource Get}" CommandParameter="GetAllBatches4Order" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCopyBatch" Style="{StaticResource BUTTON}" Margin="0,173,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="77" Content="{x:Static rscx:Resources.CopyBatch}" Foreground="{StaticResource Copy}" CommandParameter="CopyBatch" Command="{Binding Path=CopyCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,128,191,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="81" Content="{x:Static rscx:Resources.DeleteBatch}" CommandParameter="DeleteBatch" Command="{Binding Path=DeleteCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Width="43" Margin="452,62,0,0" VerticalAlignment="Top">Name:</TextBlock>
+                                <TextBox Name="UI_TXTORDERBATCHNAME" Style="{StaticResource TEXTBOX}" Width="100" TabIndex="1" Margin="0,62,14,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="0,86,121,0" VerticalAlignment="Top" Width="33" HorizontalAlignment="Right">Desc:</TextBlock>
+                                <TextBox Name="UI_TXTORDERBATCHDESC" Style="{StaticResource TEXTBOX}" Width="100" TabIndex="2" Margin="493,84,13,0" Height="20" VerticalAlignment="Top" />
+                                <TextBlock x:Name="UI_TXTBORDERBATCHSIZE" Style="{StaticResource TEXTBLOCK}" Width="25" Margin="452,110,0,0" VerticalAlignment="Top">Size:</TextBlock>
+                                <TextBox Name="UI_TXTORDERBATCHSIZE" Style="{StaticResource TEXTBOX}" TabIndex="3" Margin="494,106,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="59" />
+                                <CheckBox Content="Opt. Lock" Name="UI_CHCKORDERBATCHOPTLOCK" Style="{StaticResource CHECKBOX}" Width="70" Margin="450,132,86,0" Height="17" VerticalAlignment="Top" />
+                                <CheckBox Content="SubFolder" Name="UI_CHCKORDERBATCHWITHSUBFOLDER" Style="{StaticResource CHECKBOX}" Width="70" Margin="0,132,15,0" TabIndex="4" Checked="UI_CHCKWITHSUBFOLDER_Checked" Height="17" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" HorizontalAlignment="Right" Margin="0,99,551,0" Text="Earlier:" VerticalAlignment="Top" Width="49" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="217,99,0,0" Text="Later:" VerticalAlignment="Top" Width="36" />
+                                <WindowsFormsHost Margin="45,99,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="160">
+                                    <form:DateTimePicker x:Name="UI_DTPEARLIER" Enabled="True" Format="Custom" ShowUpDown="True" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPEARLIER_MouseMove" />
+                                </WindowsFormsHost>
+                                <WindowsFormsHost Margin="252,99,0,0" VerticalAlignment="Top" Height="20" HorizontalAlignment="Left" Width="160">
+                                    <form:DateTimePicker x:Name="UI_DTPLATER" Enabled="True" Format="Custom" ShowUpDown="True" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPLATER_MouseMove" />
+                                </WindowsFormsHost>
+                                <ComboBox Style="{StaticResource COMBOBOX_CONNECTED}" Margin="5,149,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="410" x:Name="UI_CBALLBATCHES4ORDER" Tag="{Binding ElementName=UI_BGetAllFormulasOrMR4CreateBatch}"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,173,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="183" Content="{x:Static rscx:Resources.GetAllFormulasOrMR4CreateBatch}" x:Name="UI_BGetAllFormulasOrMR4CreateBatch" Foreground="{StaticResource Get}" CommandParameter="GetAllFormulasOrMR4CreateBatch" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCreateBatch" Style="{StaticResource BUTTON}" Margin="0,128,270,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="79" Content="{x:Static rscx:Resources.CreateBatch}" Foreground="{StaticResource Create}" CommandParameter="CreateBatch" Command="{Binding Path=CreateCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="5,194,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="410" x:Name="UI_CBFORMORMR4CREATEBATCH"></ComboBox>
+                                <Line Grid.Row="0" Style="{StaticResource horizontalLineStyle}"/>
+                                <Grid VerticalAlignment="Top" Grid.Row="1" Margin="0,5,0,5" >
+                                <Button Style="{StaticResource BUTTON}" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="118" Content="{x:Static rscx:Resources.GetBatchState}" Foreground="{StaticResource Get}" CommandParameter="GetBatchState" Command="{Binding Path=GetCommand}" x:Name="UI_BGetBatchState" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="341,5,190,0" VerticalAlignment="Top" Content="{x:Static rscx:Resources.SetBatchState}" Foreground="{StaticResource Set}" CommandParameter="SetBatchState" Command="{Binding Path=SetCommand}" Width="75" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="129,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="195" x:Name="UI_CBBATCHSTATE">
+                                            <ComboBoxItem Content="(no state)" IsSelected="True" />
+                                            <ComboBoxItem Content="(reserved)" />
+                                            <ComboBoxItem Content="PLANNED" />
+                                            <ComboBoxItem Content="CANCELED" />
+                                            <ComboBoxItem Content="RELEASE PREPARED" />
+                                            <ComboBoxItem Content="RELEASED" />
+                                            <ComboBoxItem Content="BLOCKED" />
+                                            <ComboBoxItem Content="WAITING" />
+                                            <ComboBoxItem Content="RUNNING" />
+                                            <ComboBoxItem Content="PAUSED" />
+                                            <ComboBoxItem Content="HELD" />
+                                            <ComboBoxItem Content="ABORTED" />
+                                            <ComboBoxItem Content="COMPLETED" />
+                                            <ComboBoxItem Content="STOPPED" />
+                                            <ComboBoxItem Content="RELEASE CHECKING" />
+                                            <ComboBoxItem Content="RELEASE INVALID" />
+                                        </ComboBox>
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Margin="0,8,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="106" Content="Conti (chaining)" x:Name="UI_CHCKCONTINUE"></CheckBox>
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Tag="20" Margin="421,8,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Content="StayinContimode" x:Name="UI_CHCKSTAYINGCONTINUE"></CheckBox>
+                                    <StackPanel x:Name="UI_BATCHSTATECLOSED" Orientation="Horizontal" Margin="409,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATECLOSED" Tag="8" Style="{StaticResource CHECKBOX}" Height="Auto" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" MouseMove="CLOSED_MouseMove">closed</CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATEERROR" Tag="1" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" FontSize="11" Margin="20,0,0,0" MouseMove="UI_CHCKBFAIEXSTATEERROR_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATETESTONLY" Tag="16" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATETESTONLY_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATECHILDWAITING" Tag="64" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATECHILDWAITING_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATEREADYTOSTART" Tag="256" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATEREADYTOSTART_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATESIGNATURE" Tag="1024" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATESIGNATURE_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATEWAITONSTRATALLOC" Tag="4096" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATEWAITONSTRATALLOC_MouseMove"></CheckBox>
+                                        </StackPanel>
+                                        <Path Fill="White" Stretch="Fill" Stroke="White" StrokeThickness="2" Height="22" Margin="482,34,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="22" RenderTransformOrigin="0.5,0.5" Data="M197,48 L201,85">
+                                            <Path.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform />
+                                                    <SkewTransform />
+                                                    <RotateTransform Angle="45" />
+                                                    <TranslateTransform />
+                                                </TransformGroup>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                        <StackPanel x:Name="UI_BATCHSTATEARCHIVED" Orientation="Horizontal" Margin="409,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATEARCHIVED" Tag="4" Style="{StaticResource CHECKBOX}" Height="Auto" HorizontalContentAlignment="Right" FlowDirection="RightToLeft" MouseMove="ARCHIVED_MouseMove">archived</CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATEING" Tag="2" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="20,0,0,0" MouseMove="UI_CHCKBFAIEXSTATEING_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATECHILDBLOCKING" Tag="32" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATECHILDBLOCKING_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATECHILDOPERATING" Tag="128" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATECHILDOPERATING_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATESTARTCMDRECEIVED" Tag="512" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATESTARTCMDRECEIVED_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATETIMEEXPIRED" Tag="2048" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATETIMEEXPIRED_MouseMove"></CheckBox>
+                                        <CheckBox Name="UI_CHCKBFAIEXSTATEEDIT" Tag="32768" Style="{StaticResource CHECKBOX}" Width="Auto" Height="Auto" Margin="2,0,0,0" MouseMove="UI_CHCKBFAIEXSTATEEDIT_MouseMove"></CheckBox>
+                                        </StackPanel>
+                                        <Button Style="{StaticResource BUTTON}" Margin="5,0,0,44" HorizontalAlignment="Left" Width="118" Content="{x:Static rscx:Resources.GetBatchStartData}" Foreground="{StaticResource Get}" CommandParameter="GetBatchStartData" Command="{Binding Path=GetCommand}" Height="20" VerticalAlignment="Bottom" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="330,0,0,48" HorizontalAlignment="Left" Width="98" Content="{x:Static rscx:Resources.SetBatchStartData}" Foreground="{StaticResource Set}" CommandParameter="SetBatchStartData" Command="{Binding Path=SetCommand}" Height="20" VerticalAlignment="Bottom" />
+                                        <CheckBox Style="{StaticResource CHECKBOX}" Margin="435,77,101,0" VerticalAlignment="Top" x:Name="UI_CHCKSTARTMODE" Width="70">StartMode:</CheckBox>
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="0,73,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="96" x:Name="UI_CBSTARTMODE">
+                                            <ComboBoxItem Content="MANUAL" Tag="0" />
+                                            <ComboBoxItem Content="INSTANT" Tag="2" />
+                                            <ComboBoxItem Content="TIME" Tag="3" />
+                                        </ComboBox>
+                                    <TextBox x:Name="UI_TXTDATETIMEFORMATPLANSTART" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKDATETIMEFORMAT}" Width="134" TabIndex="1" Margin="0,99,263,0" Height="19" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                    <TextBox x:Name="UI_TXTDATETIMEFORMATPLANSEND" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKDATETIMEFORMAT}" Width="134" TabIndex="1" Margin="0,120,263,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                    <CheckBox x:Name="UI_CHCKDATETIMEFORMAT" Style="{StaticResource CHECKBOX}" Margin="208,80,300,0" VerticalAlignment="Top" Content="DateTimeFormat" FlowDirection="LeftToRight" Width="98" />
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="7,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50">PlanStart:</TextBlock>
+                                        <WindowsFormsHost Height="20" Width="138" Margin="63,99,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <form:DateTimePicker x:Name="UI_DTPPLANSTARTDATE" Format="Custom" ShowUpDown="True" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPPLANSTARTDATE_MouseMove"></form:DateTimePicker>
+                                        </WindowsFormsHost>
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="7,123,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50">PlanEnd:</TextBlock>
+                                        <WindowsFormsHost Height="20" Width="138" Margin="63,121,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <form:DateTimePicker x:Name="UI_DTPPLANENDDATE" Format="Custom" ShowUpDown="True" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPPLANENDDATE_MouseMove"></form:DateTimePicker>
+                                        </WindowsFormsHost>
+                                    <Button Style="{StaticResource BUTTON}" Margin="5,41,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="79" Content="{x:Static rscx:Resources.GetBatchSize}" Foreground="{StaticResource Get}" CommandParameter="GetBatchSize" Command="{Binding Path=GetCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="206,43,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="79" Content="{x:Static rscx:Resources.SetBatchSize}" Foreground="{StaticResource Set}" CommandParameter="SetBatchSize" Command="{Binding Path=SetCommand}" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="0,42,426,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="65" x:Name="UI_TXTBATCHSIZE"></TextBox>
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="372,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50">ActStart:</TextBlock>
+                                    <WindowsFormsHost Height="20" Width="141" Margin="421,97,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <form:DateTimePicker x:Name="UI_DTPACTSTARTDATE" Format="Custom" ShowUpDown="True" Enabled="False" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ"></form:DateTimePicker>
+                                    </WindowsFormsHost>
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="372,123,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50">ActEnd:</TextBlock>
+                                    <WindowsFormsHost Height="20" Width="141" Margin="421,121,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <form:DateTimePicker x:Name="UI_DTPACTENDDATE" Format="Custom" ShowUpDown="True" Enabled="False" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ"></form:DateTimePicker>
+                                    </WindowsFormsHost>
+                                </Grid>
+                                <Line Grid.Row="1" Style="{StaticResource horizontalLineStyle}"/>
+                                <Grid Grid.Row="2" Margin="0,5,0,5" >
+                                <Button Style="{StaticResource BUTTON}" Margin="5,0,0,52" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="130" Content="{x:Static rscx:Resources.GetAllChainRoots4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllChainRoots4PCell" Command="{Binding Path=GetCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,0,190,52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="170" Content="{x:Static rscx:Resources.GetAllChainedSuccessors4Batch}" Foreground="{StaticResource Get}" CommandParameter="GetAllChainedSuccessors4Batch" Command="{Binding Path=GetCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,0,5,52" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="180" Content="{x:Static rscx:Resources.GetAllChainedPredecessors4Batch}" Foreground="{StaticResource Get}" CommandParameter="GetAllChainedPredecessors4Batch" Command="{Binding Path=GetCommand}" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="5,0,0,30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="603" x:Name="UI_CBCHAINEDBATCHES"></ComboBox>
+
+                                <TextBlock Margin="170,0,0,6" HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource TEXTBLOCK}" Width="50">GapTime:</TextBlock>
+                                <Button Style="{StaticResource BUTTON}" Margin="330,0,0,4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="130" Content="{x:Static rscx:Resources.ChainBatch2Batch}" CommandParameter="ChainBatch2Batch" Command="{Binding Path=ExecuteCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="470,0,0,4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="135" Content="{x:Static rscx:Resources.UnChainBatchFromBatch}" CommandParameter="UnChainBatchFromBatch" Command="{Binding Path=ExecuteCommand}" />
+                                    <RadioButton Margin="6,0,0,7" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" x:Name="UI_RBCHAINONSTART" Style="{StaticResource RADIOBUTTON}">OnStart</RadioButton>
+                                    <RadioButton Margin="86,0,0,7" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="11" x:Name="UI_RBCHAINONEND" IsChecked="True" Style="{StaticResource RADIOBUTTON}" Width="54">OnEnd</RadioButton>
+                                <TextBox Margin="228,0,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="23" Name="UI_TXTGAPTIME" Width="78" />
+                                </Grid>
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_MATERIALQUALITY" Visibility="Collapsed" Tag="6">
+                            <Grid>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Content="{x:Static rscx:Resources.GetAllMaterials4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllMaterials4PCell" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCreateMaterial" Style="{StaticResource BUTTON}" Margin="399,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.CreateMaterial}" Foreground="{StaticResource Create}" CommandParameter="CreateMaterial" Command="{Binding Path=CreateCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button Style="{StaticResource BUTTON}" Margin="500,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.DeleteMaterial}" CommandParameter="DeleteMaterial" Command="{Binding Path=DeleteCommand}" />
+                                <ComboBox x:Name="UI_CBMATERIALS" Style="{StaticResource COMBOBOX}" Margin="5,26,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" diag:PresentationTraceSources.TraceLevel="High" ></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,56,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.GetMaterialData}" Foreground="{StaticResource Get}" CommandParameter="GetMaterialData" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BSetMaterialData" Style="{StaticResource BUTTON}" Margin="487,99,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.SetMaterialData}" Foreground="{StaticResource Set}" CommandParameter="SetMaterialData" Command="{Binding Path=SetCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="5,78,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" x:Name="UI_CBMATERIALDATA"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="368,199,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Content="{x:Static rscx:Resources.CreateManyMaterials}" Foreground="{StaticResource Create}" CommandParameter="CreateManyMaterials" Command="{Binding Path=CreateCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="368,156,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Text="Path to Many Material XML input file:" />
+                                <TextBox x:Name="UI_TXTMANYMATERIALSPATH" Style="{StaticResource TEXTBOX}" Margin="366,177,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="204" Text="{Binding Source={x:Static rscx:Settings.Default}, Path=ManyMaterialsPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="574,177,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Content="..." Foreground="{StaticResource Get}" Click="UI_BMaterialsBrowse_Click"/>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,270,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Content="{x:Static rscx:Resources.IsMaterialReferenced}" Foreground="{StaticResource Get}" CommandParameter="IsMaterialReferenced" Command="{Binding Path=ExecuteCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="155,255,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Text="List of References:" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="155,270,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="450" x:Name="UI_CBMATERIALREFERENCED"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="4,322,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Content="{x:Static rscx:Resources.GetAllQualities4Material}" Foreground="{StaticResource Get}" CommandParameter="GetAllQualities4Material" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BCreateQuality" Style="{StaticResource BUTTON}" Margin="399,322,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.CreateQuality}" Foreground="{StaticResource Create}" CommandParameter="CreateQuality" Command="{Binding Path=CreateCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <Button Style="{StaticResource BUTTON}" Margin="499,321,0,0" HorizontalAlignment="Left" Width="100" Content="{x:Static rscx:Resources.DeleteQuality}" CommandParameter="DeleteQuality" Command="{Binding Path=DeleteCommand}" Height="20" VerticalAlignment="Top" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="3,343,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" x:Name="UI_CBALLQUALITIES4MATERIAL"></ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="3,382,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.GetQualityData}" Foreground="{StaticResource Get}" CommandParameter="GetQualityData" Command="{Binding Path=GetCommand}" />
+                                <Button x:Name="UI_BSetQualityData" Style="{StaticResource BUTTON}" Margin="484,426,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.SetQualityData}" Foreground="{StaticResource Set}" CommandParameter="SetQualityData" Command="{Binding Path=SetCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM"/>
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="3,404,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" x:Name="UI_CBQUALITYDATA"></ComboBox>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Width="43" Margin="0,187,503,0" HorizontalAlignment="Right" VerticalAlignment="Top">Usage:</TextBlock>
+                                <ComboBox Name="UI_CBMATERIAL_USAGE" Style="{StaticResource COMBOBOX}" TabIndex="5" Width="66" Margin="107,186,0,0" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top">
+                                    <ComboBoxItem Content="NONE" Tag="0" IsSelected="True" />
+                                    <ComboBoxItem Content="INPUT" Tag="1" />
+                                    <ComboBoxItem Content="OUTPUT" Tag="2"/>
+                                    <ComboBoxItem Content="BOTH" Tag="3" />
+                                </ComboBox>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Width="43" Margin="62,122,0,0" VerticalAlignment="Top">Name:</TextBlock>
+                                <TextBox Name="UI_TXTMATNAME" Style="{StaticResource TEXTBOX}" Width="100" TabIndex="1" Margin="0,122,399,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="0,143,511,0" VerticalAlignment="Top" Width="33" HorizontalAlignment="Right">Desc:</TextBlock>
+                                <TextBox Name="UI_TXTMATDESC" Style="{StaticResource TEXTBOX}" Width="100" TabIndex="2" Margin="107,143,399,0" Height="20" VerticalAlignment="Top" />
+                                <TextBlock x:Name="UI_TXTBMATCODE" Style="{StaticResource TEXTBLOCK}" Width="43" Margin="61,167,0,0" VerticalAlignment="Top">Code:</TextBlock>
+                                <TextBox Name="UI_TXTMATCODE" Style="{StaticResource TEXTBOX}" Width="59" TabIndex="3" Margin="0,164,440,0" HorizontalAlignment="Right" Height="20" VerticalAlignment="Top" />
+                                <CheckBox Content="Opt. Lock" Name="UI_CHCKMATOPTLOCK" Style="{StaticResource CHECKBOX}" Width="70" Margin="59,208,0,0" TabIndex="4" Height="17" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                                <CheckBox Content="SubFolder" Name="UI_CHCKMATWITHSUBFOLDER" Style="{StaticResource CHECKBOX}" Width="70" Margin="137,208,399,224" TabIndex="4" Checked="UI_CHCKWITHSUBFOLDER_Checked" Height="17" VerticalAlignment="Top"/>
+                                <!--<CheckBox Content="SubFolder" Name="UI_CHCKWITHSUBFOLDER" Style="{StaticResource CHECKBOX}" Width="79" Margin="176,7,351,0" TabIndex="4" Checked="UI_CHCKWITHSUBFOLDER_Checked" Height="15" VerticalAlignment="Top" />-->
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_ALLOCATIONPARAMETER" Visibility="Collapsed" Tag="8">
+                            <Grid>
+                                <TextBox x:Name="UI_CBALLOCATIONS" Style="{StaticResource TEXTBOX}" Margin="100,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400"></TextBox>
+                                <Button x:Name="UI_BGetallocations" Style="{StaticResource BUTTON}" Margin="505,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetAllocations}" Foreground="{StaticResource Get}" CommandParameter="GetAllocations" Command="{Binding Path=GetCommand}" MouseLeave="UI_MOUSEOVER4CREATEFORM" MouseEnter="UI_MOUSEOVER4CREATEFORM" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="HDL Input:" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="TRP:" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="100,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" x:Name="UI_CBTRP" SelectionChanged="UI_CBTRP_SelectionChanged" />
+                                <Button Style="{StaticResource BUTTON}" Margin="505,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.SetAllocations}" Foreground="{StaticResource Set}" CommandParameter="SetAllocations" Command="{Binding Path=SetCommand}" />
+                                <TextBox x:Name="UI_TXTCUR_ALLOCATION" IsReadOnly="True" Style="{StaticResource TEXTBOX}" Margin="100,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,65,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="Current allocation:" />
+                                <Button Style="{StaticResource BUTTON}" Margin="505,95,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="SelectAllocation" Foreground="{StaticResource Set}"/>
+                                <ComboBox x:Name="UI_CBNEW_ALLOCATION" Style="{StaticResource COMBOBOX}" Margin="100,95,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="400" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,95,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="New allocation:" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,168,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="Cont ID / Term ID:" />
+                                <TextBox x:Name="UI_CONTID" Style="{StaticResource TEXTBOX}" Margin="100,165,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" />
+                                <TextBox x:Name="UI_TERMID" Style="{StaticResource TEXTBOX}" Margin="0,165,451,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="25" />
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="170,168,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" x:Name="UI_CHCKIGNOREDEFERING">Ignore Defering</CheckBox>
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="272,169,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" x:Name="UI_CHCKWITHACTVALUE">With ActValue</CheckBox>
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="5,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" IsEditable="False" SelectedIndex="0" x:Name="UI_CBPARAMETERTYPE">
+                                    <ComboBoxItem Content="&lt;all&gt;" Tag="0" IsSelected="True"/>
+                                    <ComboBoxItem Content="PP" Tag="1"/>
+                                    <ComboBoxItem Content="PI" Tag="2"/>
+                                    <ComboBoxItem Content="PO" Tag="3"/>
+                                </ComboBox>
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="60,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="440" x:Name="UI_CBPARAMETER" />
+                                <Button Style="{StaticResource BUTTON}" Margin="505,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetParameter}" Foreground="{StaticResource Get}" CommandParameter="GetParameter" Command="{Binding Path=GetCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" Text="Set:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="5,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" x:Name="UI_txtSet"/>
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="5,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" x:Name="UI_txtSet2"/>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="35,252,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10" Text="=" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="35,277,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10" Text="=" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="50,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Text="USG:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="50,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" x:Name="UI_txtUsg"/>
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="50,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" x:Name="UI_txtUsg2"/>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="94,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="31" Text="ID:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="82,250,0,0" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="43" x:Name="UI_txtID" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="82,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="42" x:Name="UI_txtID2"/>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="130,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="37" Text="DT-ID:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="0,250,439,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="37" x:Name="UI_txtDtId"/>
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="130,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="37" x:Name="UI_txtDtId2"/>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="180,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="86" Text="Value / Value ID:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="0,250,340,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="86" x:Name="UI_txtValue"/>
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="180,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="86" x:Name="UI_txtValue2"/>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="272,230,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="73" Text="PHYS UNIT-ID:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="272,250,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="73" x:Name="UI_txtPhUnit"/>
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="272,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="73" x:Name="UI_txtPhUnit2"/>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="0,230,139,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="91" Text="Material HDL:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="0,250,111,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="145" x:Name="UI_txtMatHdl"/>
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="350,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" x:Name="UI_txtMatHdl2"/>
+                                <Button Style="{StaticResource BUTTON}" Margin="504,249,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.SetParameter}" Foreground="{StaticResource Set}" CommandParameter="SetParameter" Command="{Binding Path=SetCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="504,274,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="47.5" Content="Copy" Foreground="{StaticResource Copy}" CommandParameter="CopyParameter" Command="{Binding Path=CopyCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="558,274,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="47.5" Content="Del" CommandParameter="DelParameter" Command="{Binding Path=DeleteCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="5,335,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="145" Content="{x:Static rscx:Resources.SetManyParameters}" Foreground="{StaticResource Set}" CommandParameter="SetManyParameters" Command="{Binding Path=SetCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="155,320,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Text="Path to Many Parameter XML input file:" />
+                                <TextBox x:Name="UI_TXTMANYPARAMETERPATH" Style="{StaticResource TEXTBOX}" Margin="155,335,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="397.5" Text="{Binding Source={x:Static rscx:Settings.Default}, Path=ManyParameterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="0,335,2,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="47.5" Content="..." Foreground="{StaticResource Get}" Click="UI_BParameterBrowse_Click" />
+                                <TextBox HorizontalAlignment="Left" Margin="100,121,0,0" Name="UI_STRATEGYTYPE" Style="{StaticResource TEXTBOX}" VerticalAlignment="Top" Width="49" />
+                                <TextBox HorizontalAlignment="Right" Margin="0,121,323,0" Name="UI_PROCESS_PARAM_ID" Style="{StaticResource TEXTBOX}" VerticalAlignment="Top" Width="49" Height="20" />
+                                <TextBox HorizontalAlignment="Right" Margin="0,123,159,0" Name="UI_ALLOSONSTART_ID" Style="{StaticResource TEXTBOX}" VerticalAlignment="Top" Width="49" Height="20" />
+                                <TextBlock HorizontalAlignment="Left" Margin="6,125,0,0" Style="{StaticResource TEXTBLOCK}" Text="StrategyType" VerticalAlignment="Top" Width="87" />
+                                <TextBlock Margin="170,125,0,0" Style="{StaticResource TEXTBLOCK}" Text="PP-ID" VerticalAlignment="Top" Height="16" Width="57" />
+                                <TextBlock HorizontalAlignment="Left" Margin="319,125,0,0" Style="{StaticResource TEXTBLOCK}" Text="Alloconstart" VerticalAlignment="Top" Width="65" />
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_SUBFOLDER" Visibility="Collapsed" Tag="24">
+                            <Grid Name="SUBF">
+                                <Button Style="{StaticResource BUTTON}" Margin="6,124,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Content="{x:Static rscx:Resources.GetAllSubfolders4PCell}" Foreground="{StaticResource Get}" CommandParameter="GetAllSubfolders4PCell" Command="{Binding Path=GetCommand}" />
+                                <ComboBox x:Name="UI_CBSUBFOLDER4PCELL" Style="{StaticResource COMBOBOX_CONNECTED}" Margin="6,145,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="600" Tag="{Binding ElementName=GetAllSubfolders4PCell}"></ComboBox>
+                                <Button x:Name="UI_BCreateSubfolder"  Style="{StaticResource BUTTON}" Margin="495,28,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.CreateSubfolder}" CommandParameter="CreateSubfolder" Command="{Binding Path=CreateCommand}" Foreground="{StaticResource Create}"  MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM"/>
+                                <Button Style="{StaticResource BUTTON}" Margin="0,123,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.DeleteSubfolder}" CommandParameter="DeleteSubfolder" Command="{Binding Path=DeleteCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="313,30,0,0" VerticalAlignment="Top" Width="43">Name:</TextBlock>
+                                <TextBox Name="UI_TXTSUBFOLDERNAME" Style="{StaticResource TEXTBOX}" TabIndex="1" Margin="366,29,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" />
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_COMMONFUNCTIONS" Visibility="Collapsed" Tag="10">
+                            <Grid>
+                                <TextBox x:Name="UI_TXTHDLINPUT" Style="{StaticResource TEXTBOX}" Margin="80,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="406" Tag="{Binding ElementName=UI_BGetAttribute4Object}"></TextBox>
+                                <Button x:Name="UI_BGetchildren" Style="{StaticResource BUTTON}" Margin="505,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetChildren}" Foreground="{StaticResource Get}" CommandParameter="GetChildren" Command="{Binding Path=GetCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="HDL Input:" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,31,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="TargetType:" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="80,29,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" x:Name="UI_CBTARGETTYPE" >
+                                    <ComboBoxItem Content="PROJECT" Tag="1" IsSelected="True" />
+                                    <ComboBoxItem Content="PCELL" Tag="2" />
+                                    <ComboBoxItem Content="LIBRARY" Tag="3" />
+                                    <ComboBoxItem Content="RECIPE" Tag="4" />
+                                    <ComboBoxItem Content="FORMULACAT" Tag="5" />
+                                    <ComboBoxItem Content="FORMULA" Tag="6" />
+                                    <ComboBoxItem Content="ORDERCAT" Tag="7" />
+                                    <ComboBoxItem Content="ORDER" Tag="8" />
+                                    <ComboBoxItem Content="BATCH" Tag="9" />
+                                    <ComboBoxItem Content="MATERIAL" Tag="10" />
+                                    <ComboBoxItem Content="QUALITY" Tag="11" />
+                                    <ComboBoxItem Content="USERGROUP" Tag="13" />
+                                    <ComboBoxItem Content="UNIT" Tag="14" />
+                                    <ComboBoxItem Content="UNITCLASS" Tag="15" />
+                                    <ComboBoxItem Content="SUBFOLDER" Tag="22" />
+                                </ComboBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="505,53,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetParent}" Foreground="{StaticResource Set}" CommandParameter="GetParent" Command="{Binding Path=GetCommand}" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="80,53,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="406" x:Name="UI_CBCHILDREN" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,56,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="Children:" />
+                                <Button x:Name="UI_BGetAttribute4Object"  Style="{StaticResource BUTTON}" Margin="505,77,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetAttribute4Object}" Foreground="{StaticResource Get}" CommandParameter="GetAttribute4Object" Command="{Binding Path=GetCommand}" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="80,77,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="406" x:Name="UI_CBATTRIBUTE4OBJECT" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,79,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="AttributeList:" />
+                                <Button Style="{StaticResource BUTTON}" Margin="505,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.SetAttribute4Object}" Foreground="{StaticResource Set}" CommandParameter="SetAttribute4Object" Command="{Binding Path=SetCommand}" />
+                                <ComboBox x:Name="UI_CBATTRIBUTE_NAMES" Style="{StaticResource COMBOBOX}" Margin="80,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="170" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,104,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="Attribute:" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="275,104,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="Value:" />
+                                <ComboBox x:Name="UI_CBATTRIBUTE_VALUES" Style="{StaticResource COMBOBOX}" Margin="319,101,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="167" Text="{Binding ElementName=UI_CBATTRIBUTE_NAMES, Path=SelectedItem.Tag, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Button x:Name="UI_BGetObjectData" Style="{StaticResource BUTTON}" Margin="80,130,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Content="{x:Static rscx:Resources.GetObjectData}" Foreground="{StaticResource Get}" CommandParameter="GetObjectData" Command="{Binding Path=GetCommand}" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,157,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="Archive:" />
+                                <TextBox x:Name="UI_TXTEXTTRANS" Margin="0,130,269,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="42" Visibility="Hidden">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="TextBox.Text" Value="{x:Static sys:String.Empty}" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="TextBox.Background">
+                                                        <Setter.Value>
+                                                            <VisualBrush AlignmentX="Left" AlignmentY="Center" Stretch="None" AutoLayoutContent="False">
+                                                                <VisualBrush.Visual>
+                                                                    <Grid Background="White">
+                                                                        <Label Content="0/1" Foreground="#FF888888" Width="100" />
+                                                                    </Grid>
+                                                                </VisualBrush.Visual>
+                                                            </VisualBrush>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </MultiTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <CheckBox x:Name="UI_CHKEXTTRANSFORM" Style="{StaticResource CHECKBOX}" Content="ExtTransform" Width="82" Margin="203,133,0,303" HorizontalAlignment="Left" Checked="UI_CHKEXTTRANSFORM_Checked" Unchecked="UI_CHKEXTTRANSFORM_Unchecked" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="80,155,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" IsEditable="False" x:Name="UI_CBARCHIVE" SelectionChanged="UI_CBARCHIVE_SelectionChanged">
+                                    <ComboBoxItem Content="6.0.4 (Archive V1)" Tag="0"/>
+                                    <ComboBoxItem Content="6.1.3 (Archive V2)" Tag="1"/>
+                                    <ComboBoxItem Content="7.0.1 (Archive V3)" Tag="2"/>
+                                    <ComboBoxItem Content="7.0.7 (Archive V4)" Tag="3"/>
+                                    <ComboBoxItem Content="7.1.2 (Archive V5)" Tag="4"/>
+                                    <ComboBoxItem Content="8.0.0 (Archive V6)" Tag="5"/>
+                                    <ComboBoxItem Content="8.0.1 (Archive V7)" Tag="6"/>
+                                    <ComboBoxItem Content="8.1.0 (Archive V8)" Tag="7"/>
+                                    <!--ComboBoxItem Content="8.1.1 (Archive V9)" Tag="8"/>
+                                    <ComboBoxItem Content="8.1.2 (Archive V10)" Tag="9"/-->
+                                    <ComboBoxItem Content="8.2.0 (Archive V9)" Tag="8" Selector.IsSelected="True"/>
+                                    <ComboBoxItem Content=""/>
+                                </ComboBox>
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="209,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Content="(Batch without Tags)" x:Name="UI_CHCKBATCHWITHOUTTAGS" Visibility="Hidden" />
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="210,145.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Content="Extended Data" x:Name="UI_CHCKEXTENDEDDATA" Visibility="Hidden" />
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="210,161,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Content="with PCell" x:Name="UI_CHCKWITHPCELL" Visibility="Hidden" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="351,133,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="35" Text="to file:" />
+                                <TextBox x:Name="UI_TXTINTO" Style="{StaticResource TEXTBOX}" Margin="386,131,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="205">C:\TEMP\BFAPIGetObjectData.xml </TextBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="505,155,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.ValidateObject}" CommandParameter="ValidateObject" Command="{Binding Path=ExecuteCommand}" />                               
+                                <StackPanel Orientation="Vertical" Margin="80,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="PCELL" Width="80" x:Name="UI_CHCKPCELL" Tag="4" Visibility="Hidden" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="MODIFS" Width="80"  x:Name="UI_CHCKMODIFS" Tag="1024" Visibility="Hidden" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="COMMENTS" Width="80" x:Name="UI_CHCKCOMMENTS" Tag="131072" Visibility="Hidden" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="RPEDESC" Width="80" IsChecked="True" x:Name="UI_CHCKRPEDESC" Tag="524288" Visibility="Hidden" BorderBrush="#FFFF6C6E" />
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Margin="170,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="CHARTS" Width="80" x:Name="UI_CHCKCHARTS" Tag="8" Visibility="Hidden" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="BATCHTAGS" Width="80" x:Name="UI_CHCKBATCHTAGS" Tag="2048" Visibility="Hidden" BorderBrush="Lime" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="ESIG" Width="80" IsChecked="True" x:Name="UI_CHCKESIG" Tag="32768" Visibility="Hidden" BorderBrush="Yellow" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="RPEVALUE" Width="80" IsChecked="True" x:Name="UI_CHCKRPEVALUE" Tag="1048576" Visibility="Hidden" BorderBrush="#FFFF6C6E"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Margin="260,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="SFCSTRUCTURE" Width="105" IsChecked="True" x:Name="UI_CHCKSFCSTRUCTURE" Tag="16" Visibility="Hidden" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="BATCHMESSAGES" Width="105" x:Name="UI_CHCKBATCHEMESSAGES" Tag="4096" Visibility="Hidden" BorderBrush="Lime" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="ACTION" Width="105" IsChecked="True" x:Name="UI_CHCKACTION" Tag="262144" Visibility="Hidden" BorderBrush="Yellow" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="RPEDATA" Width="105" IsChecked="True" x:Name="UI_CHCKRPEDATA" Tag="2097152" Visibility="Hidden" BorderBrush="#FFFF6C6E"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Margin="375,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="DELTAMATERIALS" Width="105"  x:Name="UI_CHCKDELTAMATERIALS" Tag="64" Visibility="Hidden" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="SNAPSHOTS" Width="105" x:Name="UI_CHCKSNAPSHOTS" Tag="16384" Visibility="Hidden" BorderBrush="Red" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="EVENTS" Width="105" x:Name="UI_CHCKEVENTS" Tag="16777216" Visibility="Hidden" />
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="ALLOCATIONS" Width="105" IsChecked="True" x:Name="UI_CHCKALLOCATIONS" Tag="33554432" Visibility="Hidden" />
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Margin="490,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="EXTINFO" Width="105" IsChecked="True" x:Name="UI_CHCKEXTINFO" Tag="67108864" Visibility="Hidden" />
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Margin="5,185,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <CheckBox Style="{StaticResource CHECKBOX}" Content="default"  x:Name="UI_CHCKDEFAULT" Unchecked="UI_CHCKDEFAULT_Unchecked" Checked="UI_CHCKDEFAULT_Checked" IsChecked="True" />
+                                </StackPanel>
+                                <Button x:Name="UI_BGetObjectHeader" Style="{StaticResource BUTTON}" Margin="5,255,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetObjectHeader}" CommandParameter="GetObjectHeader" Command="{Binding Path=GetCommand}" MouseLeave="UI_MOUSEOVER4CREATEFORM" MouseEnter="UI_MOUSEOVER4CREATEFORM" />
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="5,280,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="with Parameter" x:Name="UI_CHCKWITHPARAMETER" />
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="5,296,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" x:Name="UI_CHCKWITHACTVALUEOBJ">With ActValue</CheckBox>
+                                <Button Style="{StaticResource BUTTON}" Margin="5,313,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetObjectState}" CommandParameter="GetObjectState" Command="{Binding Path=GetCommand}" />
+                                <Border Style="{StaticResource BORDER}" Margin="110,255,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="65" Width="500">
+                                    <Canvas>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="SetObjectState" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="ExState:" />
+                                        <CheckBox x:Name="UI_CHCKTEST" Style="{StaticResource CHECKBOX}" Margin="60,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="TEST" Tag="16" />
+                                        <CheckBox x:Name="UI_CHCKERROR"  Style="{StaticResource CHECKBOX}" Margin="130,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="ERROR" Tag="1" />
+                                        <CheckBox x:Name="UI_CHCKARCHIVED" Style="{StaticResource CHECKBOX}" Margin="200,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="ARCHIVED" Tag="4" />
+                                        <CheckBox x:Name="UI_CHCKING" Style="{StaticResource CHECKBOX}" Margin="300,22,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="~ING" Tag="2" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,43,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="State:" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="60,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="325" x:Name="UI_CBOJECTSTATE">
+                                            <ComboBoxItem Content="(no state)" IsSelected="True" />
+                                            <ComboBoxItem Content="(reserved)" />
+                                            <ComboBoxItem Content="BATCH PLANNED" />
+                                            <ComboBoxItem Content="BATCH CANCELED" />
+                                            <ComboBoxItem Content="BATCH RELEASE PREPARED" />
+                                            <ComboBoxItem Content="BATCH RELEASED" />
+                                            <ComboBoxItem Content="BATCH BLOCKED" />
+                                            <ComboBoxItem Content="BATCH WAITING" />
+                                            <ComboBoxItem Content="BATCH RUNNING" />
+                                            <ComboBoxItem Content="BATCH PAUSED" />
+                                            <ComboBoxItem Content="BATCH HELD" />
+                                            <ComboBoxItem Content="BATCH ABORTED" />
+                                            <ComboBoxItem Content="BATCH COMPLETED" />
+                                            <ComboBoxItem Content="BATCH STOPPED" />
+                                            <ComboBoxItem Content="BATCH RELEASE CHECKING" />
+                                            <ComboBoxItem Content="BATCH RELEASE INVALID" />
+                                        </ComboBox>
+                                        <Button Style="{StaticResource BUTTON}" Margin="390,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.SetObjectState}" CommandParameter="SetObjectState" Command="{Binding Path=SetCommand}" />
+                                    </Canvas>
+                                </Border>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,333,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="HDL 1" />
+                                <TextBox Name="UI_HDL1" Style="{StaticResource TEXTBOX}" Margin="5,350,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="155,332,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Text="HDL 2" />
+                                <TextBox Name="UI_HDL2" Style="{StaticResource TEXTBOX}" Margin="155,350,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" />
+                                <Button Style="{StaticResource BUTTON}" Margin="295,350,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.IsEqualHDL}" CommandParameter="IsEqualHDL" Command="{Binding Path=ExecuteCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="400,350,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="LockObject" CommandParameter="LockObject" Command="{Binding Path=ExecuteCommand}" />
+                                <Button Style="{StaticResource BUTTON}" Margin="505,350,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.UnlockObject}" CommandParameter="UnlockObject" Command="{Binding Path=ExecuteCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,385,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Text="Error No." />
+                                <TextBox Name="UI_TXTERRORCODE" Style="{StaticResource TEXTBOX}" Margin="55,385,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="167,387,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Text="Text" />
+                                <TextBox Name="UI_TXTERRORTEXT" Style="{StaticResource TEXTBOX}" Margin="195,385,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" />
+                                <Button Style="{StaticResource BUTTON}" Margin="505,385,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.GetErrorText}" CommandParameter="GetErrorText" Command="{Binding Path=GetCommand}" />
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_APISISEVENTS" Visibility="Collapsed" Tag="12">
+                                     <Grid>
+                                        <Button Style="{StaticResource BUTTON}" Margin="9,6,527,0" VerticalAlignment="Top" Content="{x:Static rscx:Resources.Connect}" CommandParameter="Connect" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="493,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Content="{x:Static rscx:Resources.DisConnect}" CommandParameter="DisConnect" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="5,75,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="123" Content="{x:Static rscx:Resources.GetAllEventDefinitions}" CommandParameter="GetAllEventDefinitions" Command="{Binding Path=GetCommand}" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="138,75,0,0" VerticalAlignment="Top" x:Name="UI_CBALLEVENTDEFINITIONS" DataContext="{Binding}" Width="468" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="0,111,474,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="126" Content="{x:Static rscx:Resources.SubscribeAllBasicEvents}" CommandParameter="SubscribeAllBasicEvents" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="10,152,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.SubscribeEvent}" CommandParameter="SubscribeEvent" Command="{Binding Path=ExecuteCommand}" />
+                                        <TextBox x:Name="UI_CBEVENTID" Style="{StaticResource TEXTBOX}" Margin="0,275,127,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="235" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="0,152,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Content="{x:Static rscx:Resources.UnSubscribeEvent}" CommandParameter="UnSubscribeEvent" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="6,218,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Content="{x:Static rscx:Resources.GetAllSubscriptions}" Foreground="{StaticResource Get}" CommandParameter="GetAllSubscriptions" Command="{Binding Path=GetCommand}" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="138,218,0,0" VerticalAlignment="Top" x:Name="UI_CBALLSUBSCRIPTIONS" Width="468" />
+                                        <ComboBox x:Name="UI_CBEVENTID_POSITION" Style="{StaticResource COMBOBOX}" Margin="138,275,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="89" IsEditable="True" SelectionChanged="UI_CBEVENTID_POSITION_SelectionChanged">
+                                            <ComboBoxItem Content="ACTUAL" Selector.IsSelected="True" />
+                                            <ComboBoxItem Content="START" />
+                                            <ComboBoxItem Content="VALUE" />
+                                        </ComboBox>
+                                        <CheckBox x:Name="UI_CHKENSURE_CONSISTENT" Style="{StaticResource CHECKBOX}" Margin="138,301,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Ensure Consistent" Width="125" IsChecked="True" Visibility="Hidden" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="243,257,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Event ID:" />
+                                        <TextBox x:Name="UI_TXTSUBEVENT" Style="{StaticResource TEXTBOX}" Margin="0,153,127,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="341" Text="{Binding ElementName=UI_CBALLEVENTDEFINITIONS, Path=Text}"/>
+                                        <Button Style="{StaticResource BUTTON}" Margin="9,276,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Content="{x:Static rscx:Resources.Advise4SIS}" CommandParameter="Advise4SIS" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="0,276,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="95" Content="{x:Static rscx:Resources.UnAdvise4SIS}" CommandParameter="UnAdvise4SIS" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="6,353,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="155" Content="{x:Static rscx:Resources.GetAllActiveXFERPhase4PCell}" CommandParameter="GetAllActiveXFERPhase4PCell" Command="{Binding Path=GetCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="14,410,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="98" Content="{x:Static rscx:Resources.Resume}" CommandParameter="Resume" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="0,411,3,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="101" Content="{x:Static rscx:Resources.Suspend}" CommandParameter="Suspend" Command="{Binding Path=ExecuteCommand}" />
+                                    </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_NOTIFYFILTER" Visibility="Collapsed" Tag="22">
+                            <Grid>
+                                  <Button Style="{StaticResource BUTTON}" Margin="222,148,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="163" Content="{x:Static rscx:Resources.SetAdviseFilter}" Foreground="{StaticResource Set}" CommandParameter="SetAdviseFilter" Command="{Binding Path=SetCommand}" Height="23" />
+                                  <StackPanel Orientation="Vertical" Margin="133,0,0,53" HorizontalAlignment="Left" x:Name="UI_SPNOTIFYDISABLEBITS" Height="192" VerticalAlignment="Bottom" Width="190">
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Text="Notify-Disable-Bits" />
+                                    <CheckBox x:Name="UI_CHKFILTCREATED" Style="{StaticResource CHECKBOX}" Content="created" Width="120" Tag="2" />
+                                    <CheckBox x:Name="UI_CHKFILTDELETE" Style="{StaticResource CHECKBOX}" Content="deleted" Width="120" Tag="4" />
+                                    <CheckBox x:Name="UI_CHKFILTRENAME" Style="{StaticResource CHECKBOX}" Content="renamed" Width="120" Tag="8" />
+                                    <CheckBox x:Name="UI_CHKFILTSAVED" Style="{StaticResource CHECKBOX}" Content="saved" Width="120" Tag="16" />
+                                    <CheckBox x:Name="UI_CHKFILTLOCKED" Style="{StaticResource CHECKBOX}" Content="locked" Width="120" Tag="32" />
+                                    <CheckBox x:Name="UI_CHKFILTUNLOCKED" Style="{StaticResource CHECKBOX}" Content="unlocked" Width="120" Tag="64" />
+                                    <CheckBox x:Name="UI_CHKFILTSTATECHANGED" Style="{StaticResource CHECKBOX}" Content="state changed" Width="120" Tag="64" />
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical" Margin="329,0,0,50" HorizontalAlignment="Left" x:Name="UI_SPOBJECTDISABLEBITS" Height="195" VerticalAlignment="Bottom" Width="194">
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Text="Object-Disable-Bits" />
+                                    <CheckBox x:Name="UI_CHKFILTPCELL" Style="{StaticResource CHECKBOX}" Content="Process Cell" Width="120" Tag="4" />
+                                    <CheckBox x:Name="UI_CHKFILTLIBRARY" Style="{StaticResource CHECKBOX}" Content="Library" Width="120" Tag="8" />
+                                    <CheckBox x:Name="UI_CHKFILTRECIPIE" Style="{StaticResource CHECKBOX}" Content="Recipe" Width="120" Tag="16" />
+                                    <CheckBox x:Name="UI_CHKFILTFORMCAT" Style="{StaticResource CHECKBOX}" Content="Formula Category" Width="120" Tag="32" />
+                                    <CheckBox x:Name="UI_CHKFILTFORM" Style="{StaticResource CHECKBOX}" Content="Formula" Width="120" Tag="64" />
+                                    <CheckBox x:Name="UI_CHKFILTORDERCAT" Style="{StaticResource CHECKBOX}" Content="Order Category" Width="120" Tag="128" />
+                                    <CheckBox x:Name="UI_CHKFILTORDER" Style="{StaticResource CHECKBOX}" Content="Order" Width="120" Tag="256" />
+                                    <CheckBox x:Name="UI_CHKFILTBATCH" Style="{StaticResource CHECKBOX}" Content="Batch" Width="120" Tag="512" />
+                                    <CheckBox x:Name="UI_CHKFFILTMATERIAL" Style="{StaticResource CHECKBOX}" Content="Material" Width="120" Tag="1024" />
+                                    <CheckBox x:Name="UI_CHKFILTQUALITY" Style="{StaticResource CHECKBOX}" Content="Quality" Width="120" Tag="2048" />
+                                    <CheckBox x:Name="UI_CHKFILTUSERGRP" Style="{StaticResource CHECKBOX}" Content="User Group" Width="120" Tag="4096" />
+                                </StackPanel>
+                                <Button Style="{StaticResource BUTTON}" Margin="3,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="126" Content="{x:Static rscx:Resources.Advise2PCell}" CommandParameter="Advise" Command="{Binding Path=ExecuteCommand}" Height="25" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,32,19,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="122" Content="{x:Static rscx:Resources.UnAdviseFromPCell}" CommandParameter="UnAdvise" Command="{Binding Path=ExecuteCommand}" Height="24" />
+                                <TextBox x:Name="UI_TXTEVTTID" Margin="0,29,272,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="93" Visibility="Hidden">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="TextBox.Text" Value="{x:Static sys:String.Empty}" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="TextBox.Background">
+                                                        <Setter.Value>
+                                                            <VisualBrush AlignmentX="Left" AlignmentY="Center" Stretch="None" AutoLayoutContent="False">
+                                                                <VisualBrush.Visual>
+                                                                    <Grid Background="White">
+                                                                        <Label Content="Enter an EvtId" Foreground="#FF888888" Width="100" />
+                                                                    </Grid>
+                                                                </VisualBrush.Visual>
+                                                            </VisualBrush>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </MultiTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox> 
+                                <CheckBox x:Name="UI_CHKEVENTID" Style="{StaticResource CHECKBOX}" Content="EventId" Width="82" Margin="139,33,385,403" Checked="UI_CHKEVENTID_Checked" Unchecked="UI_CHKEVENTID_Unchecked" />
+                                <TextBox x:Name="UI_TXTAUTOREADVISE" Margin="0,57,272,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="93" Visibility="Hidden">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <MultiTrigger>
+                                                    <MultiTrigger.Conditions>
+                                                        <Condition Property="TextBox.Text" Value="{x:Static sys:String.Empty}" />
+                                                    </MultiTrigger.Conditions>
+                                                    <Setter Property="TextBox.Background">
+                                                        <Setter.Value>
+                                                            <VisualBrush AlignmentX="Left" AlignmentY="Center" Stretch="None" AutoLayoutContent="False">
+                                                                <VisualBrush.Visual>
+                                                                    <Grid Background="White">
+                                                                        <Label Content="0/1" Foreground="#FF888888" Width="100" />
+                                                                    </Grid>
+                                                                </VisualBrush.Visual>
+                                                            </VisualBrush>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </MultiTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <CheckBox x:Name="UI_CHKAUTOADVISE" Style="{StaticResource CHECKBOX}" Content="AutoReAdvise" Width="82" Margin="139,55,385,381" Checked="UI_CHKAUTOADVISE_Checked" Unchecked="UI_CHKAUTOADVISE_Unchecked" />
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_LOGBOOK" Visibility="Collapsed" Tag="14">
+                                     <Grid>
+                                        <StackPanel Orientation="Horizontal" Margin="6,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="UI_SPOBJECTTYPE_1" Width="585">
+                                            <TextBlock Style="{StaticResource TEXTBLOCK}" Text="ObjectType:" Margin="0,0,0,5" Width="65" />
+                                            <CheckBox x:Name="UI_CHKPCELL" Style="{StaticResource CHECKBOX}" Content="PCell" Width="50" />
+                                            <CheckBox x:Name="UI_CHKLIBRARY" Style="{StaticResource CHECKBOX}" Content="Library" Width="56" />
+                                            <CheckBox x:Name="UI_CHKRECIPE" Style="{StaticResource CHECKBOX}" Content="Recipe" Width="56" />
+                                            <CheckBox x:Name="UI_CHKFORMCAT" Style="{StaticResource CHECKBOX}" Content="FormCat" Width="62" />
+                                            <CheckBox x:Name="UI_CHKFORMULA" Style="{StaticResource CHECKBOX}" Content="Formula" Width="58" />
+                                            <CheckBox x:Name="UI_CHKORDERCAT" Style="{StaticResource CHECKBOX}" Content="OrderCat" Width="68" />
+                                            <CheckBox x:Name="UI_CHKORDER" Style="{StaticResource CHECKBOX}" Content="Order" Width="47" />
+                                            <CheckBox x:Name="UI_CHKBATCH" Style="{StaticResource CHECKBOX}" Content="Batch" Width="50" />
+                                            <CheckBox x:Name="UI_CHKMATERIAL" Style="{StaticResource CHECKBOX}" Content="Material" Width="120" />
+                                        </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="6,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="UI_SPOBJECTTYPE_2" Width="1274">
+                                            <TextBlock Style="{StaticResource TEXTBLOCK}" Text="ActionType:" Margin="0,0,0,5" Width="66" />
+                                            <CheckBox x:Name="UI_CHKRENAMED" Style="{StaticResource CHECKBOX}" Content="Renamed" Width="63" />
+                                            <CheckBox x:Name="UI_CHKCHAINED" Style="{StaticResource CHECKBOX}" Content="Chained" Width="57" />
+                                            <CheckBox x:Name="UI_CHKUNCHAINED" Style="{StaticResource CHECKBOX}" Content="Unchained" Width="69" />
+                                            <CheckBox x:Name="UI_CHKREL_TEST" Style="{StaticResource CHECKBOX}" Content="RelTest" Width="56" />
+                                            <CheckBox x:Name="UI_CHKREL_PROD" Style="{StaticResource CHECKBOX}" Content="RelProd" Width="55" />
+                                            <CheckBox x:Name="UI_CHKARCHIVED" Style="{StaticResource CHECKBOX}" Content="Archived" Width="59" />
+                                            <CheckBox x:Name="UI_CHKIMPORTED" Style="{StaticResource CHECKBOX}" Content="Imported" Width="61" />
+                                            <CheckBox x:Name="UI_CHKNEW_PROD" Style="{StaticResource CHECKBOX}" Content="NewProd" Width="60" />
+                                            <CheckBox x:Name="UI_CHKDELETED" Style="{StaticResource CHECKBOX}" Content="Deleted" Width="54" />
+                                        </StackPanel>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="0,115,511,0" HorizontalAlignment="Right" VerticalAlignment="Top" Text="New username:" Width="85" />
+                                    <ComboBox x:Name="UI_TXTLOGBUSERNAME" Style="{StaticResource COMBOBOX}" Margin="115,115,379,0" VerticalAlignment="Top" Width="112" IsEditable="True"/>
+                                        <Button x:Name="UI_BLOGBADDUSER" Style="{StaticResource BUTTON}" Margin="0,116,96,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="66" Content="{x:Static rscx:Resources.AddUser}" Height="20" Click="UI_BLOGBADDUSER_Click" />
+                                        <Button x:Name="UI_BLOGBREMOVEUSER" Style="{StaticResource BUTTON}" Margin="0,115,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="80" Content="{x:Static rscx:Resources.RemoveUser}" Click="UI_BLOGBREMOVEUSER_Click" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="6,207,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Time Slice:" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,229,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Start Time:" />
+                                        <WindowsFormsHost Margin="115,228,0,0" VerticalAlignment="Top" Height="22" HorizontalAlignment="Left" Width="146">
+                                    <form:DateTimePicker x:Name="UI_DTPSTARTDATE" Format="Custom" ShowUpDown="True" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPSTARTDATE_MouseMove"></form:DateTimePicker>
+                                        </WindowsFormsHost>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,255,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="End Time:" />
+                                        <WindowsFormsHost Margin="0,255,345,0" VerticalAlignment="Top" Height="22" Width="146" HorizontalAlignment="Right">
+                                    <form:DateTimePicker x:Name="UI_DTPENDDATE" Format="Custom" ShowUpDown="True" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPENDDATE_MouseMove"></form:DateTimePicker>
+                                        </WindowsFormsHost>
+                                        <Button Style="{StaticResource BUTTON}" Margin="285,255,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Content="{x:Static rscx:Resources.GetLogBookObjects}" CommandParameter="GetLogBookObjects" Command="{Binding Path=GetCommand}" />
+                                        <CheckBox Style="{StaticResource CHECKBOX}" Margin="285,232,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Content="Write to file only" x:Name="UI_CHCKONLYFILE" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,320,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Result:" TextAlignment="Right" Width="44" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="115,320,160,0" VerticalAlignment="Top" x:Name="UI_CBRESULT" Width="331" />
+                                </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_PRINT" Visibility="Visible" Tag="23">
+                            <Grid>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="8,204,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Text="Object HDL:" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="115,201,160,0" VerticalAlignment="Top" x:Name="UI_TXTOBJECTHDL" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,152,3,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Content="{x:Static rscx:Resources.TransferData2PH}" CommandParameter="TransferData2PH" Command="{Binding Path=ExecuteCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="3,54,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Text="Template path /file:" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="115,53,0,0" VerticalAlignment="Top" x:Name="UI_CBTEMPLATEPATHANDFILE" HorizontalAlignment="Left" Width="331" IsEditable="True" />
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="115,34,408,398" Content="with ObjHdl:" x:Name="UI_CHCKWITHOBJHDL" Width="83" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,53,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Content="{x:Static rscx:Resources.GetAllPrintTemplates4PCell}" CommandParameter="GetAllPrintTemplates4PCell" Command="{Binding Path=GetCommand}" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="6,111,0,0" HorizontalAlignment="Left" Width="100" Text="Output path /file:" VerticalAlignment="Top" />
+                                <TextBox Style="{StaticResource TEXTBOX}" Margin="115,111,160,0" VerticalAlignment="Top" x:Name="UI_TXTOUTPUTPATHANDFILE">C:\Temp\BatchX</TextBox>
+                                <Button x:Name="UI_BPrintObject" Style="{StaticResource BUTTON}" Margin="0,200,4,0" HorizontalAlignment="Right" Width="150" Content="{x:Static rscx:Resources.PrintObject}" CommandParameter="PrintObject" Command="{Binding Path=ExecuteCommand}" Height="20" VerticalAlignment="Top" MouseEnter="UI_MOUSEOVER4CREATEFORM" MouseLeave="UI_MOUSEOVER4CREATEFORM" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="11,250,0,0" HorizontalAlignment="Left" Width="100" Text="LcId:" VerticalAlignment="Top" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="115,247,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" x:Name="UI_CBLCID" >
+                                    <ComboBoxItem Content="ENGLISH" Tag="1033" IsSelected="True" />
+                                    <ComboBoxItem Content="GERMAN" Tag="1031" />
+                                    <ComboBoxItem Content="CHINESE" Tag="2052" />
+                                    <ComboBoxItem Content="FRENCH" Tag="1036" />
+                                    <ComboBoxItem Content="JAPANESE" Tag="1041" />
+                                    <ComboBoxItem Content="ITALIEN" Tag="1040" />
+                                </ComboBox>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="0,249,284,0" Text="Timezone:" VerticalAlignment="Top" HorizontalAlignment="Right" Width="66" />
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="329,246,157,0" x:Name="UI_CBTIMEZONE" Height="20" VerticalAlignment="Top">
+                                    <ComboBoxItem Content="GMT STANDARD TIME" IsSelected="True"/>
+                                    <ComboBoxItem Content="CENTRAL AMERICA STANDARD TIME"/>
+                                    <ComboBoxItem Content="CENTRAL EUROPE STANDARD TIME"/>
+                                    <ComboBoxItem Content="SOUTH AFRICA STANDARD TIME" />
+                                    <ComboBoxItem Content="CHINA STANDARD TIME" />
+                                </ComboBox>
+                                <CheckBox Style="{StaticResource CHECKBOX}" Margin="6,281,495,151" Content="AddParams4Print:" x:Name="UI_CHCKADDPARAMETER" Width="105" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="42,314,0,0" Text="Name 1:" Width="42" VerticalAlignment="Top" />
+                                <TextBox x:Name="UI_TXTPARANAME1" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKADDPARAMETER}" Margin="115,314,391,0" Height="20" VerticalAlignment="Top" />
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="253,314,0,0" Text="Value 1:" Width="42" VerticalAlignment="Top" />
+                                <TextBox x:Name="UI_TXTPARAVALUE1" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKADDPARAMETER}" Margin="0,312,192,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" />
+                                <Button Style="{StaticResource BUTTON}" Margin="0,110,4,0" HorizontalAlignment="Right" Width="150" Content="{x:Static rscx:Resources.BackUp}" CommandParameter="BackUp" Command="{Binding Path=ExecuteCommand}" Height="20" VerticalAlignment="Top" />
+                                <TextBlock Margin="42,341,0,0" Style="{StaticResource TEXTBLOCK}" Text="Name 2:"  Width="42" VerticalAlignment="Top" />
+                                <TextBox x:Name="UI_TXTPARANAME2" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKADDPARAMETER}" Margin="115,338,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" />
+                                <TextBlock Margin="0,342,311,0" Style="{StaticResource TEXTBLOCK}" Text="Value 2:" Width="42" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                                <TextBox x:Name="UI_TXTPARAVALUE2" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKADDPARAMETER}" Margin="314,337,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" />
+
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Width="620" Name="UI_GRID_COMMANDMANAGER" Visibility="Collapsed" Tag="16">
+                            <Grid>
+                                <ComboBox Style="{StaticResource COMBOBOX}" Margin="134,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="335" x:Name="UI_COMMANDEXECUTE" SelectionChanged="UI_COMMANDEXECUTE_SelectionChanged" IsEditable="False">
+                                    <ComboBoxItem Content="Acknowledge"/>
+                                    <ComboBoxItem Content="GetAllActive OperatorAllocations" />
+                                    <ComboBoxItem Content="GetAllActiveObjects" />
+                                    <ComboBoxItem Content="GetData4PCell" />
+                                    <ComboBoxItem Content="GetErrorText" />
+                                    <ComboBoxItem Content="GetProjectSettings" />
+                                </ComboBox>
+                                <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,31,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Execute Command:" />
+                                <Border x:Name="UI_BDACKNOWLEDGE" Style="{StaticResource BORDER}" Height="57" Margin="-2,70,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+                                    <Grid>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Batch HDL:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="79,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="520" x:Name="UI_TXTBATCHHDL_1" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="80,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Container ID:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="150,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" x:Name="UI_TXTCONTID" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="205,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Terminal ID:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="270,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" x:Name="UI_TXTTERMID" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="325,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Cookie:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="370,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" x:Name="UI_TXTCOOKIE" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="480,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="111" Content="Acknowledge" CommandParameter="ExecuteCommand_Acknowledge" Command="{Binding Path=ExecuteCommand}" />
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="UI_BDERRORTEXT" Style="{StaticResource BORDER}" Height="32" Margin="5,351,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+                                    <Grid>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Error:" />
+                                        <TextBox  x:Name="UI_TXTERRORCODE1" Style="{StaticResource TEXTBOX}" Margin="45,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="170" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="240,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Language:" />
+                                        <TextBox x:Name="UI_TXTLANGUAGEID" Style="{StaticResource TEXTBOX}" Margin="300,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="175" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="480,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Content="GetErrorText" CommandParameter="ExecuteCommand_GetErrorText" Command="{Binding Path=ExecuteCommand}" />
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="UI_BDALLACTIVEOPSALLOC" Style="{StaticResource BORDER}" Height="57" Margin="1,138,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+                                    <Grid>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Batch HDL:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="80,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="395" x:Name="UI_TXTBATCHHDL_2" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="335" x:Name="UI_CBBATCHHDL_1" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="350,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Content="Add" CommandParameter="AddOps" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="415,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Content="Clear" CommandParameter="ClearOps" Command="{Binding Path=ExecuteCommand}" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="480,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="35" CommandParameter="ExecuteCommand_GetAllActOperAllocs" Command="{Binding Path=ExecuteCommand}">
+                                            <TextBlock TextAlignment="Center" VerticalAlignment="Center">GetAllActive <LineBreak /> OperatorAllocations</TextBlock>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="UI_BDALLACTIVESOPS" Style="{StaticResource BORDER}" Margin="5,208,0,184" HorizontalAlignment="Left" Visibility="Hidden">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="201*" />
+                                            <ColumnDefinition Width="404*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Batch HDL:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="80,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="520" x:Name="UI_TXTBATCHHDL_3" Grid.ColumnSpan="2" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="10,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="335" x:Name="UI_CBBATCHHDL_2" Grid.ColumnSpan="2" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="146,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Content="Add" CommandParameter="AddObj" Command="{Binding Path=ExecuteCommand}" Grid.Column="1" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="211,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Content="Clear" CommandParameter="ClearObj" Command="{Binding Path=ExecuteCommand}" Grid.Column="1" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="276,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Content="GetAllActiveObjects" CommandParameter="ExecuteCommand_GetAllActObj" Command="{Binding Path=ExecuteCommand}" Grid.Column="1" />
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="UI_BDALLDATA4PCELL" Style="{StaticResource BORDER}" Height="57" Margin="5,280,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+                                    <Grid>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="PCell HDL:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="80,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="520" x:Name="UI_TXTPCELLHDL" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="80,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="PCell Part ID:" />
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="150,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" x:Name="UI_TXTPCELLPARTID" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="225,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Archive Type:" />
+                                        <ComboBox Style="{StaticResource COMBOBOX}" Margin="0,30,130,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="180" x:Name="UI_CBARCHIVETYPE">
+                                            <ComboBoxItem Content="6.0(Archive_V1)" Tag="1" IsSelected="True"/>
+                                            <ComboBoxItem Content="6.1.1(Archive_V2)" Tag="2"/>
+                                            <ComboBoxItem Content="7.0.1(Archive_V3)" Tag="3"/>
+                                            <ComboBoxItem Content="7.0.7(Archive_V4)" Tag="4"/>
+                                            <ComboBoxItem Content="7.1.2(Archive_V5)" Tag="5" IsSelected="True" />
+                                        </ComboBox>
+                                        <Button Style="{StaticResource BUTTON}" Margin="480,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Content="GetData4PCell" CommandParameter="ExecuteCommand_GetData4PCell" Command="{Binding Path=ExecuteCommand}" />
+                                    </Grid>
+                                </Border>
+                                <Border x:Name="UI_BDPROJSETTINGS" Style="{StaticResource BORDER}" Height="32" Margin="5,401,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
+                                    <Grid>
+                                        <Button Style="{StaticResource BUTTON}" Margin="480,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Content="GetProjectSettings" CommandParameter="ExecuteCommand_GetProjectSettings" Command="{Binding Path=ExecuteCommand}" />
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_AUDITTRAIL" Visibility="Collapsed" Tag="18" Margin="0,0,0, 100">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="164" />
+                                    <ColumnDefinition Width="459" />
+                                </Grid.ColumnDefinitions>
+                                <Border Style="{StaticResource BORDER}" Grid.ColumnSpan="2">
+                                    <Grid>
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150">Username:</TextBlock>
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="5,19,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" x:Name="UI_TXTAUDITUSERNAME" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150">Longname:</TextBlock>
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="5,59,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" x:Name="UI_TXTAUDITLONGNAME" />
+                                        <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,85,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150">Computer:</TextBlock>
+                                        <TextBox Style="{StaticResource TEXTBOX}" Margin="5,99,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" x:Name="UI_TXTAUDITCOMPUTERNAME" />
+                                        <Button Style="{StaticResource BUTTON}" Margin="5,125,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Content="AddUserInfo" Click="AddUserInfo_Click"></Button>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Column="1" Style="{StaticResource BORDER}" Margin="6,0,0,0">
+                                    <Grid >
+                                        <ListView ItemsSource="{Binding}" x:Name= "UI_LSTUSERINFO" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="410" Width="440">
+                                            <ListView.View>
+                                                <GridView >
+                                                    <GridViewColumn>
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <CheckBox IsChecked="{Binding Path=MyCheck}" Checked="cb_Checked_Click"/>
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>
+                                                    <!--<GridViewColumn Width="40" Header="Check">
+                                                        <GridViewColumn.CellTemplate>
+                                                            <DataTemplate x:Name="ChBox">
+                                                                <CheckBox Style="{StaticResource CHECKBOX}" x:Name="UI_cb" Checked="cb_Checked_Click" BindingGroup="{Binding MyCheck}" />
+                                                            </DataTemplate>
+                                                        </GridViewColumn.CellTemplate>
+                                                    </GridViewColumn>-->
+                                                    <GridViewColumn Width="140" Header="UserName" DisplayMemberBinding="{Binding UserName}"/>
+                                                    <GridViewColumn Width="140" Header="LongName" DisplayMemberBinding="{Binding LongName}" />
+                                                    <GridViewColumn Width="140" Header="Computer" DisplayMemberBinding="{Binding Computer}" />
+                                                </GridView>
+                                            </ListView.View>
+                                        </ListView>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </ContentControl>
+                        <ContentControl Name="UI_GRID_HISTORICALSISEVENTS" Visibility="Collapsed" Tag="20">
+                            <Border Style="{StaticResource BORDER}">
+                                <Grid>
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="378,157,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Select Object Type:" />
+                                    <RadioButton Style="{StaticResource RADIOBUTTON}" Margin="548,157,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Batch" x:Name="UI_RBBATCH" IsChecked="True" />
+                                    <RadioButton Style="{StaticResource RADIOBUTTON}" Margin="498,157,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Unit" x:Name="UI_RBUNIT" />
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="10,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Units:" />
+                                    <Button x:Name="UI_BAddUnit" Style="{StaticResource BUTTON}" Margin="0,31,486,0" HorizontalAlignment="Right" Width="60" Content="Add" Click="UI_BAddUnit_Click" Height="20" VerticalAlignment="Top" />
+                                    <ComboBox Style="{StaticResource COMBOBOX}" Margin="125,32,145,0" VerticalAlignment="Top" x:Name="UI_CBALLHSISUNITS" SelectedIndex="{Binding ElementName=UI_CBCHILDREN, Path=SelectedIndex, Mode=TwoWay}" />
+                                    <Button Style="{StaticResource BUTTON}" Margin="483,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.GetAllUnits}" CommandParameter="GetAllUnits" Command="{Binding Path=GetCommand}" />
+                                    <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="11,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Batches:" />
+                                    <Button x:Name="UI_BAddBatch" Style="{StaticResource BUTTON}" Margin="0,72,486,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" Content="Add" Click="UI_BAddBatch_Click" />
+                                    <ComboBox Style="{StaticResource COMBOBOX}" Margin="125,72,145,0" VerticalAlignment="Top" x:Name="UI_CBHSISCHANGEDBATCHES" />
+                                    <Button Style="{StaticResource BUTTON}" Margin="483,73,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="115" Content="{x:Static rscx:Resources.GetChangedBatches}" CommandParameter="GetChangedBatches" Command="{Binding Path=GetCommand}" />
+                                    <Button x:Name="UI_BClearHdl" Style="{StaticResource BUTTON}" Margin="0,105,486,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="60" Content="Clear" Click="UI_BClearHdl_Click" />
+                                    <ComboBox Style="{StaticResource COMBOBOX}" Margin="125,105,145,0" VerticalAlignment="Top" x:Name="UI_CBHSISCHANGED" />
+                                    <!--<TextBox Style="{StaticResource TEXTBOX}" Margin="200,90,70,0" VerticalAlignment="Top" x:Name="UI_CBHSISCHANGED" />-->
+                                    <Border Style="{StaticResource BORDER}" Height="57" Margin="5,178,0,0" VerticalAlignment="Top">
+                                        <Grid>
+                                            <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Time slice:" />
+                                            <CheckBox Style="{StaticResource CHECKBOX}" x:Name="UI_CHKHISEVENTSTARTTIME" Margin="66,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="StartTime:" Checked="CheckBox_Checked_2" Unchecked="CheckBox_Checked_2"/>
+                                            <!--< Style="{StaticResource TEXTBLOCK}" Margin="75,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="StartTime:" /-->
+                                            <WindowsFormsHost Margin="0,5,300,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="22" Width="160">
+                                                <form:DateTimePicker x:Name="UI_DTPHSIS_STARTDATE" Format="Custom" ShowUpDown="True" Enabled="False" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPHSIS_STARTDATE_MouseMove"></form:DateTimePicker>
+                                            </WindowsFormsHost>
+                                            <Button Style="{StaticResource BUTTON}" Margin="0,10,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="105" Height="35" Content="{x:Static rscx:Resources.GetHistoricalSISEvents4Batch}"  CommandParameter="GetHistoricalSISEventsByTime" Command="{Binding Path=GetCommand}" />
+                                            <CheckBox Style="{StaticResource CHECKBOX}" x:Name="UI_CHKHISEVENTENDTIME" Margin="66,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="EndTime:" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" />
+                                            <WindowsFormsHost Margin="139,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="160">
+                                                <form:DateTimePicker x:Name="UI_DTPHSIS_ENDDATE"  Format="Custom" ShowUpDown="True" Enabled="False" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ" MouseMove="UI_DTPHSIS_ENDDATE_MouseMove"></form:DateTimePicker>
+                                            </WindowsFormsHost>
+                                        </Grid>
+                                    </Border>
+                                    <Border Style="{StaticResource BORDER}" Height="57" Margin="5,254,0,0" VerticalAlignment="Top">
+                                        <Grid>
+                                            <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Event slice:" />
+                                            <!--TextBlock Style="{StaticResource TEXTBLOCK}" Margin="77.5,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="StartEvent:" /-->
+                                            <CheckBox x:Name="UI_CHKHISEVENTSTART" Style="{StaticResource CHECKBOX}" Margin="66,8,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="StartEvent:" Checked="UI_CHKHISEVENTSTART_Checked" Unchecked="UI_CHKHISEVENTSTART_Checked"/>
+                                            <TextBox Style="{StaticResource TEXTBOX}" Margin="139,5,125,0" VerticalAlignment="Top" IsEnabled="False" x:Name="UI_TXTSTARTEVENT" Text= "0"/>
+                                            <Button Style="{StaticResource BUTTON}" Margin="0,10,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="105" Height="35" Content="{x:Static rscx:Resources.GetHistoricalSISEvents4Batch}" CommandParameter="GetHistoricalSISEventsByID" Command="{Binding Path=GetCommand}" />
+                                            <CheckBox x:Name="UI_CHKHISEVENTEND" Style="{StaticResource CHECKBOX}" Margin="65,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="EndEvent:" Checked="CheckBox_Checked_1" Unchecked="CheckBox_Checked_1" />
+                                            <TextBox Style="{StaticResource TEXTBOX}" Margin="0,30,125,0" VerticalAlignment="Top" x:Name="UI_TXTENDEVENT" IsEnabled="False" HorizontalAlignment="Right" Width="333" Text= "0"/>
+                                        </Grid>
+                                    </Border>
+                                    <Border Style="{StaticResource BORDER}" Height="47" Margin="5,338,0,0" VerticalAlignment="Top">
+                                        <Grid>
+                                            <TextBlock Style="{StaticResource TEXTBLOCK}" Margin="5,7,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="File:" />
+                                            <TextBox x:Name="UI_TXTHISFILEPATH" Style="{StaticResource TEXTBOX}" Margin="65,5,173,0" VerticalAlignment="Top"/>
+                                            <Button Style="{StaticResource BUTTON}" Margin="0,5,118,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Content="..."  Foreground="{StaticResource Get}" Click="UI_BROWSE_Click" />
+                                            <Button Style="{StaticResource BUTTON}" Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="105" Height="35" Content="{x:Static rscx:Resources.GetHistoricalSISEvents4Batch}" CommandParameter="GetHistoricalSISEventsByFile" Command="{Binding Path=GetCommand}" />
+                                            <CheckBox Style="{StaticResource CHECKBOX}" Margin="65,27,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Content="Show Example" x:Name="UI_CHCKSHOWEXAMPLE" Checked="UI_CHCKSHOWEXAMPLE_Checked" />
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </ContentControl>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Border BorderBrush="Silver" BorderThickness="1" Height="100" Canvas.Left="83" VerticalAlignment="Bottom" Margin="12,0,5,0">
+                <Grid>
+                    <ComboBox x:Name="UI_CBPCELLS" Style="{StaticResource COMBOBOX}" Margin="64,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="408"></ComboBox>
+                    <TextBlock Margin="8,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TEXTBLOCK}" Text="PCells:" Width="43" />
+                    <ToggleButton x:Name="UI_CHCKHIERARCHY" Style="{StaticResource CHECKBUTTON}" Margin="5,33,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="62" Content="Hierarchy" />
+                    <CheckBox x:Name="UI_CHCKTIMESTAMP" Style="{StaticResource CHECKBOX}" Margin="495,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Content="all since" FlowDirection="LeftToRight" Checked="UI_CHCKTIMESTAMP_Checked" Unchecked="UI_CHCKTIMESTAMP_Checked" />
+                    <WindowsFormsHost Margin="495,26,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="120" DataContext="{Binding}">
+                        <form:DateTimePicker x:Name="UI_DTPDATE" Format="Custom" ShowUpDown="True" Enabled="False" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ"></form:DateTimePicker>
+                    </WindowsFormsHost>
+                    <WindowsFormsHost Margin="495,53,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Width="120">
+                        <form:DateTimePicker x:Name="UI_DTPTIME" Format="Custom" ShowUpDown="True" Enabled="False" CustomFormat="yyyy-MM-ddT HH:mm:ss.sssZ"/>
+                    </WindowsFormsHost>
+                    <ToggleButton x:Name="UI_CHCKAUDITTRAIL" Style="{StaticResource CHECKBUTTON}" Margin="74,33,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="71" Content="Audit Trail" />
+                    <StackPanel Margin="155,31,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Width="77">
+                        <CheckBox x:Name="UI_CHCKWILDCARD" Style="{StaticResource CHECKBOX}" VerticalAlignment="Center" Width="17" Padding="0" />
+                        <TextBox x:Name="UI_TXTWILDCARD" Width="60" IsEnabled="{Binding Path=IsChecked, ElementName=UI_CHCKWILDCARD}" VerticalAlignment="Center" >
+                            <TextBox.Style>
+                                <Style TargetType="TextBox">
+                                    <Style.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="TextBox.Text" Value="{x:Static sys:String.Empty}" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="TextBox.Background">
+                                                <Setter.Value>
+                                                    <VisualBrush AlignmentX="Left" AlignmentY="Center" Stretch="None" AutoLayoutContent="False">
+                                                        <VisualBrush.Visual>
+                                                            <Grid Background="White">
+                                                                <Label Content="Wildcard" Foreground="#FF888888" Width="100" />
+                                                            </Grid>
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </MultiTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+        <!--<Viewbox Stretch="None">-->
+        <Grid Name="UI_TABCANVAS">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.5*" />
+            </Grid.RowDefinitions>
+            <ToggleButton Grid.Row="0" Style="{StaticResource TABSTYLE}" Name="UI_INIT_TAB" Canvas.Top="0" Checked="UI_INIT_TAB_Checked" Tag="0">
+                    <TextBlock TextAlignment="Center" VerticalAlignment="Center">INIT</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="2"  Style="{StaticResource TABSTYLE}" Name="UI_RECIPE_FORMULA_TAB" Canvas.Top="50" Checked="UI_RECIPE_FORMULA_TAB_Checked" Tag="1" IsEnabled="True" Margin="10,6,10,5">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">RECIPE <LineBreak /> FORMULA</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="3" Style="{StaticResource TABSTYLE}" Name="UI_ORDER_BATCH_TAB" Canvas.Top="100" Checked="UI_ORDER_BATCH_TAB_Checked" Tag="2" Margin="10,7,10,5">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">ORDER <LineBreak /> BATCH</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="4" Style="{StaticResource TABSTYLE}" Name="UI_MATERIAL_QUALITY_TAB" Canvas.Top="150" Checked="UI_MATERIAL_QUALITY_TAB_Checked" Tag="3" Margin="10,5,10,6">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">MATERIAL <LineBreak /> QUALITY</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="5" Style="{StaticResource TABSTYLE}" Name="UI_PARAMETER_TAB" Canvas.Top="200" Checked="UI_PARAMETER_TAB_Checked" Tag="8" Margin="10,5,10,6">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">ALLOCATION <LineBreak/> PARAMETER</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="6" Style="{StaticResource TABSTYLE}" Name="UI_COMMON_FUNCTIONS_TAB" Canvas.Top="250" Checked="UI_COMMON_FUNCTIONS_TAB_Checked" Tag="4" Margin="10,7,10,5">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">COMMON <LineBreak/> FUNCTIONS</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="8" Style="{StaticResource TABSTYLE}" Name="UI_API_SIS_EVENTS_TAB" Canvas.Top="300" Checked="UI_API_SIS_EVENTS_TAB_Checked" Tag="5" Margin="10,6">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">SIS <LineBreak/> EVENTS</TextBlock>
+            </ToggleButton>
+            <ToggleButton Grid.Row="7" Style="{StaticResource TABSTYLE}" Name="UI_NOTIFY_FILTER_TAB" Canvas.Top="550" Checked="UI_NOTIFY_FILTER_TAB_Checked" Tag="10" Margin="10,5,10,6">
+                <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">API<LineBreak/>EVENTS</TextBlock>
+            </ToggleButton>
+            <ToggleButton Grid.Row="9" Style="{StaticResource TABSTYLE}" Name="UI_LOGBOOK_TAB" Canvas.Top="350" Checked="UI_LOGBOOK_TAB_Checked" Tag="6" Margin="10,5,10,6">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">LOGBOOK</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="10" Style="{StaticResource TABSTYLE}" Name="UI_PRINT_TAB" Canvas.Top="350" Checked="UI_PRINT_TAB_Checked" Tag="11" Margin="10,6,10,0" Height="35" VerticalAlignment="Top">
+                <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">PRINT</TextBlock>
+            </ToggleButton>
+            <ToggleButton Grid.Row="11" Style="{StaticResource TABSTYLE}" Name="UI_COMMAND_MANAGER_TAB" Canvas.Top="400" Checked="UI_COMMAND_MANAGER_TAB_Checked" Tag="7" Margin="10,7,10,5">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">COMMAND <LineBreak/> MANAGER</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="12" Style="{StaticResource TABSTYLE}" Name="UI_AUDIT_TRAIL_TAB" Canvas.Top="450" Checked="UI_AUDIT_TRAIL_TAB_Checked" Tag="8" Margin="10,8,10,3">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">AUDIT TRAIL</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="13" Style="{StaticResource TABSTYLE}" Name="UI_HISTORICAL_SIS_EVENTS_TAB" Canvas.Top="500" Checked="UI_HISTORICAL_SIS_EVENTS_TAB_Checked" Tag="9" Margin="10,8,10,4">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">HISTORICAL <LineBreak/> SIS EVENTS</TextBlock>
+                </ToggleButton>
+            <ToggleButton Grid.Row="14" Style="{StaticResource TABSTYLE}" Name="UI_XML_TO_SQL_TAB" Canvas.Top="550" Checked="UI_XML_TO_SQL_TAB_Checked" Tag="11" IsEnabled="False" Visibility="Hidden" Height="35" Margin="10,11,10,0" VerticalAlignment="Top">
+                    <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">XML TO SQL</TextBlock>
+                </ToggleButton>
+            <ToggleButton Style="{StaticResource TABSTYLE}" Name="UI_SUBFOLDER_TAB" Canvas.Top="350" Checked="UI_SUBFOLDER_TAB_Checked" Tag="12" Margin="10,6,10,0" Height="35" VerticalAlignment="Top" Grid.Row="1">
+                <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" VerticalAlignment="Center">SUBFOLDER</TextBlock>
+            </ToggleButton>
+        </Grid>
+        <GridSplitter IsEnabled="False" Background="{StaticResource GridSplitterBrushVert}"
+                      ShowsPreview="False" ResizeDirection="Columns"
+                      Width="7" Grid.Column="2" HorizontalAlignment="Left" >
+        </GridSplitter>
+        <Grid x:Name="UI_GridIO" Grid.Column="2" SizeChanged="UI_GridIO_SizeChanged">
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="110" Height="Auto"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition MinHeight="110"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition MinHeight="110" Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <WebBrowser Margin="13,22,41,10" Name="UI_WEBINPUT" />
+            <Label Content="Input:" Grid.Row="0" Foreground="White" Height="17" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Margin="13,5,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="0" />
+            <Button Grid.Row="0" Height="23" HorizontalAlignment="Right" Margin="0,22,7,0" Name="UI_WEBINPUT_WORDWRAP" VerticalAlignment="Top" Width="27" Click="UI_WEBINPUT_WORDWRAP_Click" Background="#FF64B4FF">
+                <Image Source="Images/Word-Wrap.gif"></Image>
+            </Button>
+
+            <GridSplitter HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Top" Height="8" Margin="7,0,0,0" 
+                  Grid.Row="1" ResizeDirection="Rows" 
+                  ResizeBehavior="PreviousAndNext" Background="{StaticResource ResourceKey=GridSplitterBrushHor}" />
+
+            <WebBrowser  x:Name="UI_WEBOUTPUT" Grid.Row="2" Margin="13,18,33,5"/>
+            <TreeView x:Name="UI_WEBOUTPUTTREE" Visibility="Hidden" Grid.Row="2" Margin="13,18,33,5" />
+            <Label Content="Output:" Grid.Row="2" HorizontalAlignment="Left" Margin="13,0,0,0" VerticalAlignment="Top" Foreground="White" Padding="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Height="18" />
+            <Button Name="UI_WEBOUTPUT_WORDWRAP" Grid.Row="2" Height="22" HorizontalAlignment="Right" Margin="0,18,5,0" VerticalAlignment="Top" Width="22" Click="UI_OUTPUTWORDWRAP_Clicked" Background="#FF64B4FF"  Padding="-1, -1, 0, 0">
+                <Image Source="Images/Word-Wrap.gif"></Image>
+            </Button>
+            <Button Name="UI_WEBOUTPUT_EXPAND" Grid.Row="2" Background="#FF64B4FF" Height="22" HorizontalAlignment="Right" Margin="0,50,5,0" VerticalAlignment="Top" Width="22" Padding="-1, -1, 0, 0">
+                <Image Source="Images/Expand.gif" />
+            </Button>
+            <Button Name="UI_WEBOUTPUT_TREETOGGLE" Background="#FF94CFFF" Height="22" HorizontalAlignment="Right" Margin="0,80,5,0" Padding="-1, -1, 0, 0" VerticalAlignment="Top" Width="22" Grid.Row="2" Click="UI_WEBOUTPUT_TREETOGGLE_Click" Content="T" />
+
+            <GridSplitter HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Top" Height="8" Margin="7,0,0,0"
+                  Grid.Row="3" ResizeDirection="Rows"
+                  Background="{StaticResource ResourceKey=GridSplitterBrushHor}" 
+                  ResizeBehavior="PreviousAndNext" />
+
+            <!--<RichTextBox Grid.Row="0" Margin="13,0,33,12" Height="89" VerticalAlignment="Bottom"  Name="UI_TXTNOTIFICATIONS_OLD" HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" />-->
+            <Label Grid.Row="4" Content="Notifications:" Margin="14,3,0,0" Foreground="White" Height="18" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Padding="0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="66"/>
+            <TreeView Grid.Row="4" Margin="13,20,6,11" Name="UI_TXTNOTIFICATIONS" VerticalAlignment="Stretch" BorderBrush="{x:Null}" MouseDoubleClick="UI_TXTNOTIFICATIONS_MouseDoubleClick"> </TreeView>
+            <!--<Button Grid.Row="4" Background="#FF64B4FF" Height="22" HorizontalAlignment="Right" Margin="0,20,5,0" Name="UI_TXTNOTIFICATIONS_WORDWRAP" Padding="-1, -1, 0, 0" VerticalAlignment="Top" Width="22" >
+                <Image Source="/bfapicmx_csharpsamplex;component/Images/Word-Wrap.gif" />
+            </Button>-->
+        </Grid>
+    </Grid>
+</Window>

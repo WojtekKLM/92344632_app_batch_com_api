@@ -1,0 +1,352 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Effects -->
+    <Storyboard x:Name="UI_CBStorybGreen" x:Key="UI_CBStoryB">
+       
+        <ColorAnimationUsingKeyFrames 
+                            Storyboard.TargetProperty="Background.Color"
+                                        Duration="0:0:0.2" AutoReverse="False" >
+            <LinearColorKeyFrame KeyTime="0:0:0" Value="White" />
+            <EasingColorKeyFrame KeyTime="0:0:0.10" Value="White" >
+                <EasingColorKeyFrame.EasingFunction>
+                    <CircleEase EasingMode="EaseIn" />
+                </EasingColorKeyFrame.EasingFunction>
+            </EasingColorKeyFrame>
+            <EasingColorKeyFrame KeyTime="0:0:0.2" Value="White" >
+                <EasingColorKeyFrame.EasingFunction>
+                    <CircleEase EasingMode="EaseIn" />
+                </EasingColorKeyFrame.EasingFunction>
+            </EasingColorKeyFrame>
+        </ColorAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <!-- Control Styles -->
+    <Style x:Key="TEXTBLOCK" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Height" Value="16"/>
+    </Style>
+
+    <Style x:Key="TABSTYLE" TargetType="ToggleButton">
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="Width" Value="70"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Name="border" 
+				            BorderThickness="1"
+				            CornerRadius="1" 
+				            Background="Transparent">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.5">
+                                <GradientStop Color="White" Offset="0.35"/>
+                                <GradientStop Color="#FFADADAD" Offset="0.55"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Grid>
+                            <ContentPresenter 
+                                    Name="content">
+                            </ContentPresenter>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                            <Setter Property="Foreground" Value="#FF4788c8"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BUTTON" TargetType="Button">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Width" Value="70"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="FontSize" Value="11.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" 
+				            BorderThickness="1"
+				            CornerRadius="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity="0.5">
+                                <GradientStop Color="White" Offset="0.35"/>
+                                <GradientStop Color="#FFADADAD" Offset="0.55"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <RadialGradientBrush GradientOrigin="0.225,-0.616" RadiusX="0.757" RadiusY="0.863">
+                                <GradientStop Color="#EEFFFFFF"/>
+                                <GradientStop Color="#00868686" Offset="0.696"/>
+                            </RadialGradientBrush>
+                        </Border.Background>
+                        <Grid>
+                            <TextBlock TextAlignment="Center"
+                                           VerticalAlignment="Center">
+                                <ContentPresenter 
+                                    Name="content" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                </ContentPresenter>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Opacity" Value="0.5" />
+                            <Setter TargetName="content" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border"  Property="Opacity" Value="1"/>
+                            <Setter TargetName="content" Property="Opacity" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CHECKBUTTON" TargetType="ToggleButton">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border 
+                            Name="border" 
+				            BorderThickness="1"
+                            Margin="3,0"
+				            CornerRadius="1">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#FFB9C4D4" />
+                        </Border.BorderBrush>
+                        <Grid>
+                            <ContentPresenter 
+                                    Name="content" Margin="2, 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            </ContentPresenter>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Foreground" Value="Yellow"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="TOGGLEBUTTON" TargetType="ToggleButton">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Width" Value="70"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Name="border" 
+				            BorderThickness="0"
+				            CornerRadius="0">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFB9C4D4" Offset="0"/>
+                                <GradientStop Color="#FFB9C4D4" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Grid>
+                            <ContentPresenter 
+                                    Name="content" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            </ContentPresenter>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="#FF4788c8" />
+                            <Setter Property="Foreground" Value="#FF4788c8"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="LightBlue"/>
+                            <Setter Property="Foreground" Value="LightBlue"/>
+                        </Trigger>
+                        <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="IsChecked">
+                                        <DiscreteBooleanKeyFrame KeyTime="00:00:01" Value="True" />
+                                    </BooleanAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Name="TEXTBOX" x:Key="TEXTBOX" TargetType="TextBox">
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="TEXTBOX_CONNECTED" TargetType="TextBox" BasedOn="{StaticResource TEXTBOX}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=Tag.IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                 To="Yellow" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)"
+                                                 To="{x:Null}" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="PASSWORDBOX" TargetType="PasswordBox">
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+    
+
+    <Style x:Key="CHECKBOX" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#00868686"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Width" Value="75"/>
+        <Setter Property="Margin" Value="0,1,0,1" />
+    </Style>
+    
+    <Style x:Key="RADIOBUTTON" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#FF000055"/>
+        <Setter Property="FontSize" Value="11"/>
+    </Style>
+
+    <Style x:Name="COMBOBOX" x:Key="COMBOBOX" TargetType="ComboBox">
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="White" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="AllowDrop" Value="True"/>
+        <Setter Property="IsEditable" Value="True"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="Height" Value="20"/>
+    </Style>
+    <Style x:Key="COMBOBOX_CONNECTED" TargetType="ComboBox" BasedOn="{StaticResource COMBOBOX}">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=Tag.IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                 To="Yellow" Duration="0:0:0.1" />
+                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" 
+                                                    To="1.5" Duration="0:0:0.05" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetProperty="BorderBrush.Color"
+                                                 To="{x:Null}" Duration="0:0:0.1" />
+                            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness" 
+                                                    To="0" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BORDER" TargetType="Border">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.5">
+                    <GradientStop Color="#FFB9C4D4" Offset="0"/>
+                    <GradientStop Color="#FFB9C4D4" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <LinearGradientBrush x:Key="GridSplitterBrushHor" x:Name="GridSplitterBrushHor" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStopCollection  >
+            <GradientStop Color="Transparent" Offset="0" />
+            <GradientStop Color="#FF54A4FF" Offset="0.5" />
+            <GradientStop Color="Transparent" Offset="1" />
+        </GradientStopCollection>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GridSplitterBrushVert" x:Name="GridSplitterBrushVert" StartPoint="0,0.5" EndPoint="1,0.5" >
+        <GradientStopCollection >
+            <GradientStop Color="Transparent" Offset="0" />
+            <GradientStop Color="#FF4484CC" Offset="0.5" />
+            <GradientStop Color="#FF54A4EC" Offset="1" />
+        </GradientStopCollection>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="Get"    Color="White"></SolidColorBrush>
+    <SolidColorBrush x:Key="Set"    Color="Cyan"></SolidColorBrush>
+    <SolidColorBrush x:Key="Create" Color="Yellow"></SolidColorBrush>
+    <SolidColorBrush x:Key="Copy"   Color="Yellow"></SolidColorBrush>
+    <SolidColorBrush x:Key="Delete"   Color="Yellow"></SolidColorBrush>
+
+
+    <Style x:Key="lineStyle" TargetType="Line">
+        <Setter Property="Stretch" Value="Fill" />
+        <Setter Property="Grid.ZIndex" Value="100" />
+    </Style>
+
+    <Style x:Key="horizontalLineStyle" TargetType="Line" BasedOn="{StaticResource lineStyle}">
+        <Setter Property="X2" Value="1" />
+        <Setter Property="Stroke" Value="#CC99B4FF" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Margin" Value="-6,0,-6,0" />
+    </Style>
+
+    <Style x:Key="verticalLineStyle" TargetType="Line" BasedOn="{StaticResource lineStyle}">
+        <Setter Property="Y2" Value="1" />
+        <Setter Property="Stroke" Value="#88B9C4E4" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Margin" Value="0,-6,0,0" />
+    </Style>
+
+    <Style x:Key="verticalLineStyleLeft" TargetType="Line" BasedOn="{StaticResource verticalLineStyle}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <Style x:Key="horizontalLineStyleTop" TargetType="Line" BasedOn="{StaticResource horizontalLineStyle}">
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+</ResourceDictionary>
